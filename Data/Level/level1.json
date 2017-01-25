@@ -1,0 +1,12 @@
+{
+	"Name" : "Level1",
+	"Size" : [1920,1080],
+	"Backgrounds" : [
+		{
+			"Path" : "Data/Background/grid.png",
+			"BackgroundLevel" : 0 
+		}
+	],
+	"Entitys" : [
+	]
+}

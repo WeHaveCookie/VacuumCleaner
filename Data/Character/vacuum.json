@@ -1,0 +1,17 @@
+{
+	"Name" : "Vacuum",
+	"Width" : 90,
+	"Height" : 90,
+	"Speed" : 1.0,
+	"Position" : [180.0, 180.0],
+	"State" : "IDLE_RIGHT",	
+	"Movable" : true,
+	"Animations" : [
+		{
+			"State" : "IDLE_RIGHT",
+			"Frame" : 1,
+			"Line" : 1,
+			"Time" : 0.1
+		}
+	]
+}
