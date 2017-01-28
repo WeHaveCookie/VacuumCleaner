@@ -6,6 +6,8 @@
 #include "Level/Level.h"
 #include "Manager/File/FileMgr.h"
 #include "Utils/wcharUtils.h"
+#include "Utils/Random.h"
+#include "Manager/Entity/EntityMgr.h"
 
 LevelMgr* LevelMgr::s_singleton = NULL;
 
@@ -153,4 +155,18 @@ uint32_t LevelMgr::loadLevelAsync()
 void LevelMgr::unloadLevel()
 {
 	m_level->unload();
+}
+
+void LevelMgr::createDusts(uint32_t nbr)
+{
+	auto ent = EntityMgr::getSingleton()->createEntity("Data/Character/dust.json");
+	sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
+	m_level->registrerIntoGrid(ent, pos); 
+}
+
+void LevelMgr::createJewels(uint32_t nbr)
+{
+	auto ent = EntityMgr::getSingleton()->createEntity("Data/Character/jewel.json");
+	sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
+	m_level->registrerIntoGrid(ent, pos);
 }

@@ -36,6 +36,10 @@ class LevelMgr : public Manager
 		bool loadLevel(char* path);
 		void unloadLevel();
 		uint32_t loadLevelAsync();
+
+		void createDusts(uint32_t nbr);
+		void createJewels(uint32_t nbr);
+
     protected:
     private:
         // Function

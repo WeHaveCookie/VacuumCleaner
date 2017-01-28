@@ -55,6 +55,16 @@ namespace CollisionState
 	};
 }
 
+namespace EntityElement
+{
+	enum Enum
+	{
+		none,
+		dust,
+		jewel
+	};
+}
+
 namespace EntityOrientation
 {
 	enum Enum
@@ -272,6 +282,7 @@ class Entity
 		void setVY(float v) { m_state.m_live.m_vy = std::min(v, m_state.m_live.m_vMax); }
 		void setBackgroundLevel(uint32_t level) { m_state.m_live.m_backgroundLevel = level; }
 		void showImGuiWindow();
+		EntityElement::Enum getElement() { return m_state.m_live.m_element; }
 
 	protected:
 		static uint32_t		newUID;
@@ -327,6 +338,7 @@ class Entity
 				Vector2													m_scale;
 				EntityAction::Enum										m_action;
 				uint32_t												m_backgroundLevel; //  0 => foreground | Higher => background
+				EntityElement::Enum										m_element;
 
 				void clear()
 				{

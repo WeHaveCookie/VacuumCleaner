@@ -29,6 +29,8 @@ class GameMgr : public Manager
 
     protected:
     private:
+		void generateEnvironment(const float dt);
+
         // Function
 		static GameMgr*			s_singleton;
 		sf::RenderWindow*		m_mainRenderWindow;
@@ -38,4 +40,7 @@ class GameMgr : public Manager
 		int						m_movementSpeed;
 		std::vector<uint32_t>	m_playersId;
 		uint32_t				m_nbrPlayers;
+
+		float					m_updateEnvironmentTimer;
+		float					m_updateEnvironmentDelay;
 };

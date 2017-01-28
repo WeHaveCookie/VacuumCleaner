@@ -46,6 +46,9 @@ void GameMgr::init()
 	auto soundMgr = SOUND_MGR;
 	strcpy(m_gameName, GAME_NAME);
 	m_movementSpeed = 5;
+
+	m_updateEnvironmentDelay = 2.0f;
+	m_updateEnvironmentTimer = 0.0f;
 }
 
 void GameMgr::process(const float dt)
@@ -140,5 +143,18 @@ void GameMgr::setNumberPlayer(uint32_t nbr)
 			}
 		}
 		m_nbrPlayers = nbr;
+	}
+}
+
+void GameMgr::generateEnvironment(const float dt)
+{
+	m_updateEnvironmentTimer += dt;
+	if (m_updateEnvironmentTimer > m_updateEnvironmentDelay)
+	{
+		m_updateEnvironmentTimer = 0.0f;
+		auto nbrDusts = randIntBorned(0, 5);
+		auto nbrJewels = randIntBorned(0, 3);
+		LevelMgr::getSingleton()->createDusts(nbrDusts);
+		LevelMgr::getSingleton()->createJewels(nbrJewels);
 	}
 }

@@ -14,6 +14,54 @@ void Background::paint()
 	rdrWin->draw(m_sprite);
 }
 
+
+void CaseHandler::pushEnt(Entity* ent)
+{
+	entities.push_back(ent->getUID());
+	if (ent->getElement() == EntityElement::dust)
+	{
+		dusts++;
+	}
+	else if (ent->getElement() == EntityElement::jewel)
+	{
+		jewels++;
+	}
+}
+
+void CaseHandler::clean()
+{
+	bool dustRemove = false;
+	for (auto& ent : entities)
+	{
+		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::dust && !dustRemove)
+		{
+			dustRemove = true;
+			EntityMgr::getSingleton()->deleteEntity(ent);
+		}
+		
+		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() != EntityElement::dust)
+		{
+			EntityMgr::getSingleton()->deleteEntity(ent);
+		}
+		
+	}
+	entities.clear();
+	dusts = 0;
+	jewels = 0;
+}
+
+void CaseHandler::cleanJewels()
+{
+	for (auto& ent : entities)
+	{
+		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::jewel)
+		{
+			EntityMgr::getSingleton()->deleteEntity(ent);
+		}
+	}
+	jewels = 0;
+}
+
 Level::Level()
 {
 }
@@ -64,7 +112,15 @@ bool Level::load(const char* path)
 
 	auto sizePtr = &m_size;
 	checkAndAffect(&document, "Size", ValueType::Vector2, (void**)&sizePtr);
-	
+
+	auto caseSizePtr = &m_caseSize;
+	checkAndAffect(&document, "CaseSize", ValueType::Vector2, (void**)&caseSizePtr);
+
+	if (document.HasMember("Path"))
+	{
+		createGrid(document["Path"].GetString());
+	}
+
 	if (document.HasMember("Backgrounds"))
 	{
 		const rapidjson::Value& backgrounds = document["Backgrounds"];
@@ -115,6 +171,7 @@ bool Level::load(const char* path)
 			}
 		}
 	}
+
 	FileMgr::CloseFile(json);
 	return true;
 }
@@ -135,4 +192,45 @@ void Level::unload()
 	m_entitys.clear();
 	m_name = "";
 	m_size = sf::Vector2f();
+}
+
+void Level::createGrid(const char* path)
+{
+	m_grid.clear();
+	for (int i = 0; i < m_size.x; i++)
+	{
+		for (int j = 0; j < m_size.y; j++)
+		{
+			auto back = EntityMgr::getSingleton()->createEntity(path);
+			back->setPosition(Vector2(m_caseSize.x * i, m_caseSize.y * j));
+			CaseHandler cHandler;
+			cHandler.dusts = 0;
+			cHandler.jewels = 0;
+			cHandler.background = back;
+			m_grid.at(std::make_pair(i, j)) = cHandler;
+		}
+	}
+}
+
+const std::map<std::pair<uint32_t, uint32_t>, CaseHandler> Level::getGrid() const
+{
+	return m_grid;
+}
+
+void Level::registrerIntoGrid(Entity* ent, sf::Vector2i pos)
+{
+	auto cases = m_grid.at(std::make_pair(pos.x,pos.y));
+	cases.pushEnt(ent);
+}
+
+void Level::cleanCase(sf::Vector2i pos)
+{
+	auto cases = m_grid.at(std::make_pair(pos.x, pos.y));
+	cases.clean();
+}
+
+void Level::removeJewels(sf::Vector2i pos)
+{
+	auto cases = m_grid.at(std::make_pair(pos.x, pos.y));
+	cases.cleanJewels();
 }
