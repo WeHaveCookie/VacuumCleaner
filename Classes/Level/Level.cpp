@@ -8,6 +8,8 @@
 #include "Manager/Entity/EntityMgr.h"
 #include "Utils/containerUtils.h"
 #include "Manager/Game/GameMgr.h"
+#include "Manager/Sound/SoundMgr.h"
+#include "Manager/Physic/PhysicMgr.h"
 
 void Background::paint()
 {
@@ -34,7 +36,7 @@ void CaseHandler::pushEnt(Entity* ent)
 		currentPos.y += ent->getGlobalBounds().height;
 		if (currentPos.y > background->getPosition().y + (background->getGlobalBounds().height - ent->getGlobalBounds().height))
 		{
-			currentPos = Vector2(0.0, 0.0);
+			currentPos = background->getPosition();
 		}
 		currentPos.x = background->getPosition().x;
 	}
@@ -54,9 +56,10 @@ void CaseHandler::erase(uint32_t id)
 	}
 }
 
-void CaseHandler::clean()
+int CaseHandler::clean()
 {
 	std::vector < uint32_t > deleteEntity;
+	int score = 0;
 	bool dustRemove = false;
 	for (auto& ent : entities)
 	{
@@ -66,6 +69,7 @@ void CaseHandler::clean()
 			EntityMgr::getSingleton()->deleteEntity(ent);
 			deleteEntity.push_back(ent);
 			dusts--;
+			score += GameMgr::getSingleton()->getDustFactor();
 		}
 		
 		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() != EntityElement::Dust)
@@ -73,6 +77,7 @@ void CaseHandler::clean()
 			EntityMgr::getSingleton()->deleteEntity(ent);
 			deleteEntity.push_back(ent);
 			jewels--;
+			score += GameMgr::getSingleton()->getLossJewelFactor();
 		}
 	}
 	
@@ -80,23 +85,42 @@ void CaseHandler::clean()
 	{
 		erase(del);
 	}
+	return score;
 }
 
-void CaseHandler::cleanJewels()
+int CaseHandler::cleanJewels()
 {
+	auto it = entities.begin();
+	int score = 0;
 	for (auto& ent : entities)
 	{
 		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::Jewel)
 		{
 			EntityMgr::getSingleton()->deleteEntity(ent);
+			jewels--;
+			entities.erase(it);
+			score += GameMgr::getSingleton()->getJewelFactor();
+			break;
 		}
+		it++;
 	}
-	jewels = 0;
+	return score;
 }
 
 const uint32_t CaseHandler::getScore() const
 {
 	return dusts * GameMgr::getSingleton()->getDustFactor() + jewels * GameMgr::getSingleton()->getJewelFactor();
+}
+
+void CaseHandler::cleanAll()
+{
+	for (auto& ent : entities)
+	{
+		EntityMgr::getSingleton()->deleteEntity(ent);
+	}
+	dusts = 0;
+	jewels = 0;
+	entities.clear();
 }
 
 Level::Level()
@@ -156,6 +180,11 @@ bool Level::load(const char* path)
 	auto positionPtr = &m_position;
 	checkAndAffect(&document, "Position", ValueType::Vector2, (void**)&positionPtr);
 
+	if (document.HasMember("Music"))
+	{
+		auto music = SoundMgr::getSingleton()->addMusic(document["Music"].GetString(), true);
+	}
+
 	if (document.HasMember("Path"))
 	{
 		createGrid(document["Path"].GetString());
@@ -211,7 +240,8 @@ bool Level::load(const char* path)
 			}
 		}
 	}
-
+	m_score = 0;
+	m_usedEnergy = 0;
 	FileMgr::CloseFile(json);
 	return true;
 }
@@ -293,3 +323,27 @@ CaseHandler* Level::getHigherScoreCase()
 	}
 	return ans;
 }
+
+void Level::clearAllCases()
+{
+	for (auto& line : m_grid)
+	{
+		for (auto& handler : line)
+		{
+			handler->cleanAll();
+		}
+	}
+}
+
+void Level::cleanCase(Entity* ent)
+{
+	m_score += PhysicMgr::getSingleton()->getCase(ent)->clean();
+	useEnergy();
+}
+
+void Level::pickCase(Entity* ent)
+{
+	m_score += PhysicMgr::getSingleton()->getCase(ent)->cleanJewels();
+	useEnergy();
+}
+

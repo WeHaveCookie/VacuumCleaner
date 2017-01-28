@@ -15,7 +15,7 @@ PhysicMgr::PhysicMgr()
 	:Manager(ManagerType::Enum::Physic)
 {
 	s_singleton = this;
-	m_enable = true;
+	m_enable = false;
 	m_registeryQueue = new RegisteryQueue();
 }
 
@@ -34,9 +34,9 @@ void PhysicMgr::process(const float dt)
 {
 	sf::Clock clock;
 	processRegisteryQueue();
-	processPhysic(dt);
 	if (m_enable)
 	{
+		processPhysic(dt);
 		for (auto& entity : m_entitys)
 		{
 			checkValidityOfPosition(entity);
@@ -538,4 +538,16 @@ bool PhysicMgr::tryToFall(Entity* ent)
 		}
 	}
 	return true;
+}
+
+CaseHandler* PhysicMgr::getCase(Entity* ent) const
+{
+	for (auto& collider : m_entitys)
+	{
+		if (collider != ent && collider->getElement() == EntityElement::None && CollisionAABBandAABB(collider->getGlobalBounds(), ent->getGlobalBounds()))
+		{
+			return collider->getCaseHandler();
+		}
+	}
+	return nullptr;
 }

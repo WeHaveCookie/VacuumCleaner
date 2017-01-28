@@ -285,6 +285,12 @@ class Entity
 		void showImGuiWindow();
 		EntityElement::Enum getElement() { return m_state.m_live.m_element; }
 		void setCaseHandler(CaseHandler* cHandler) { m_state.m_live.m_caseHandler = cHandler; }
+		CaseHandler* getCaseHandler() const { return m_state.m_live.m_caseHandler; }
+
+		void moveToTarget(const float dt);
+		void setTargetPos(Vector2 pos) { m_state.m_live.m_targetPos = pos; }
+
+		const bool hasTarget() const;
 
 	protected:
 		static uint32_t		newUID;
@@ -342,6 +348,8 @@ class Entity
 				uint32_t												m_backgroundLevel; //  0 => foreground | Higher => background
 				EntityElement::Enum										m_element;
 				CaseHandler*											m_caseHandler;
+				Vector2													m_targetPos;
+				float													m_maxSpeed;
 
 				void clear()
 				{
@@ -360,6 +368,7 @@ class Entity
 					m_animate = true;
 					m_collisionState = CollisionState::None;
 					m_caseHandler = nullptr;
+					m_maxSpeed = 10.0f;
 				}
 			} m_live;
 

@@ -33,6 +33,7 @@ class PhysicMgr : public Manager
 		sf::Time getProcessTime() { return m_processTime; }
 		
 		const double getGravity() const { return m_gravity; }
+		CaseHandler* getCase(Entity* ent) const;
 
         // Inline
     protected:

@@ -27,10 +27,11 @@ struct CaseHandler
 	}
 
 	void pushEnt(Entity* ent);
-	void clean();
-	void cleanJewels();
+	int clean();
+	int cleanJewels();
 	void erase(uint32_t id);
 	const uint32_t getScore() const;
+	void cleanAll();
 };
 
 class Level
@@ -53,6 +54,17 @@ public:
 	void cleanCase(sf::Vector2i pos);
 	void removeJewels(sf::Vector2i pos);
 	CaseHandler* getHigherScoreCase();
+	const sf::Vector2f getCaseSize() const { return m_caseSize; }
+	const sf::Vector2f getPosition() const { return m_position; }
+	const sf::Vector2f getSizeLevel() const { return sf::Vector2f(m_size.x * m_caseSize.x, m_size.y * m_caseSize.y); }
+	void clearAllCases();
+
+	void cleanCase(Entity* ent);
+	void pickCase(Entity* ent);
+
+	const int getScore() const { return m_score; }
+	const uint32_t getUsedEnergy() const { return m_usedEnergy; }
+	void useEnergy(uint32_t nbr = 1) { m_usedEnergy += nbr; }
 
 private:
 
@@ -65,5 +77,7 @@ private:
 	std::vector<Background*>	m_backgrounds;
 	std::vector<Background*>	m_foregrounds;
 	std::vector<std::vector<CaseHandler*>> m_grid;
+	int					m_score;
+	uint32_t			m_usedEnergy;
 };
 

@@ -8,6 +8,7 @@
 #include "Manager/Physic/PhysicMgr.h"
 #include "Utils/wcharUtils.h"
 #include "Manager/Input/InputMgr.h"
+#include "Manager/Level/LevelMgr.h"
 
 EntityMgr* EntityMgr::s_singleton = NULL;
 uint32_t Entity::newUID = 0;
@@ -203,4 +204,55 @@ void EntityMgr::displayEntitysInfos()
 	{
 		entity->showImGuiWindow();
 	}
+}
+
+void EntityMgr::moveEntity(MoveDirection::Enum dir, Entity* ent)
+{
+	auto levelMgr = LevelMgr::getSingleton();
+	if (ent->hasTarget())
+	{
+		return;
+	}
+	switch (dir)
+	{
+	case MoveDirection::Left:
+	{
+		auto x = ent->getPosition().x - levelMgr->getSizeCase().x;
+		if (x >= levelMgr->getPositionLevel().x)
+		{
+			ent->setTargetPos(Vector2(x, ent->getPosition().y));
+		}
+		break;
+	}
+	case MoveDirection::Right:
+	{
+		auto x = ent->getPosition().x + levelMgr->getSizeCase().x;
+		if (x < levelMgr->getPositionLevel().x + levelMgr->getSizeLevel().x)
+		{
+			ent->setTargetPos(Vector2(x, ent->getPosition().y));
+		}
+		break;
+	}
+	case MoveDirection::Up:
+	{
+		auto y = ent->getPosition().y - levelMgr->getSizeCase().y;
+		if (y >= levelMgr->getPositionLevel().y)
+		{
+			ent->setTargetPos(Vector2(ent->getPosition().x, y));
+		}
+		break;
+	}
+	case MoveDirection::Down:
+	{
+		auto y = ent->getPosition().y + levelMgr->getSizeCase().y;
+		if (y < levelMgr->getPositionLevel().y + levelMgr->getSizeLevel().y)
+		{
+			ent->setTargetPos(Vector2(ent->getPosition().x, y));
+		}
+		break;
+	}
+	default:
+		break;
+	}
+	LevelMgr::getSingleton()->usedEnergy();
 }

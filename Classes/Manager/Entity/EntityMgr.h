@@ -5,6 +5,17 @@
 
 class EntityPool;
 
+namespace MoveDirection
+{
+	enum Enum
+	{
+		Left,
+		Right,
+		Up,
+		Down
+	};
+}
+
 class EntityMgr : public Manager
 {
 
@@ -33,6 +44,7 @@ class EntityMgr : public Manager
 		sf::Time getProcessTime() { return m_processTime; }
 
 		void displayEntitysInfos();
+		void moveEntity(MoveDirection::Enum dir, Entity* ent);
 
 	private:
 		static EntityMgr*		s_singleton;

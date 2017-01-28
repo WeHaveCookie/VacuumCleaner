@@ -2,6 +2,7 @@
 #include "CommandMove.h"
 #include "Entity/Entity.h"
 #include "Manager/Game/GameMgr.h"
+#include "Manager/Entity/EntityMgr.h"
 
 void CommandMove::init(Entity* ent, void* data)
 {
@@ -14,7 +15,21 @@ void CommandMove::execute()
 {
 	Entity* entity = getEntity();
 	m_lastPosition = entity->getPosition();
-	entity->addMotion(m_motion);
+	if (m_motion.x < 0.0f)
+	{
+		EntityMgr::getSingleton()->moveEntity(MoveDirection::Left, entity);
+	} else if (m_motion.x > 0.0f)
+	{
+		EntityMgr::getSingleton()->moveEntity(MoveDirection::Right, entity);
+	} else if (m_motion.y < 0.0f)
+	{
+		EntityMgr::getSingleton()->moveEntity(MoveDirection::Up, entity);
+	}
+	else if (m_motion.y > 0.0f)
+	{
+		EntityMgr::getSingleton()->moveEntity(MoveDirection::Down, entity);
+	}
+	//entity->addMotion(m_motion);
 }
 
 void CommandMove::undo()

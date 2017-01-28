@@ -427,9 +427,11 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
   <ItemGroup>
     <ClInclude Include="..\..\Classes\Actions\Command.h" />
     <ClInclude Include="..\..\Classes\Actions\CommandAttack.h" />
+    <ClInclude Include="..\..\Classes\Actions\CommandClean.h" />
     <ClInclude Include="..\..\Classes\Actions\CommandInput.h" />
     <ClInclude Include="..\..\Classes\Actions\CommandJump.h" />
     <ClInclude Include="..\..\Classes\Actions\CommandMove.h" />
+    <ClInclude Include="..\..\Classes\Actions\CommandPickUp.h" />
     <ClInclude Include="..\..\Classes\Actions\CommandSound.h" />
     <ClInclude Include="..\..\Classes\Entity\Character\Character.h" />
     <ClInclude Include="..\..\Classes\Entity\Entity.h" />
@@ -484,9 +486,11 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\..\Classes\Actions\Command.cpp" />
     <ClCompile Include="..\..\Classes\Actions\CommandAttack.cpp" />
+    <ClCompile Include="..\..\Classes\Actions\CommandClean.cpp" />
     <ClCompile Include="..\..\Classes\Actions\CommandInput.cpp" />
     <ClCompile Include="..\..\Classes\Actions\CommandJump.cpp" />
     <ClCompile Include="..\..\Classes\Actions\CommandMove.cpp" />
+    <ClCompile Include="..\..\Classes\Actions\CommandPickUp.cpp" />
     <ClCompile Include="..\..\Classes\Actions\CommandSound.cpp" />
     <ClCompile Include="..\..\Classes\Entity\Character\Character.cpp" />
     <ClCompile Include="..\..\Classes\Entity\Entity.cpp" />

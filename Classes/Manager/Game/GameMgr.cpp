@@ -53,6 +53,7 @@ void GameMgr::init()
 	m_jewelsPerSpawn = 1;
 	m_jewelFactor = 5;
 	m_dustFactor = 10;
+	m_lossJewelFactor = -20;
 }
 
 void GameMgr::process(const float dt)
@@ -109,7 +110,8 @@ void GameMgr::showImGuiWindow(bool* window)
 		ImGui::InputInt("Jewels per Spawn", &m_jewelsPerSpawn);
 		ImGui::InputInt("Dust Factor", &m_dustFactor);
 		ImGui::InputInt("Jewel Factor", &m_jewelFactor);
-
+		ImGui::InputInt("Loss Jewel Factor", &m_lossJewelFactor);
+		
 	}
 	ImGui::End();
 }

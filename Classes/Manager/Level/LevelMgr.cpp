@@ -48,7 +48,7 @@ void LevelMgr::end()
 void LevelMgr::paint()
 {
 	m_level->paint();
-	m_quadtree->paint();
+	//m_quadtree->paint();
 }
 
 void LevelMgr::showImGuiWindow(bool* window)
@@ -68,7 +68,7 @@ void LevelMgr::showImGuiWindow(bool* window)
 			}
 		}
 
-		ImGui::Text("Current Level : %s", m_level->getName());
+		ImGui::Text("Current Level : %s - Score : %i - Energy : %i", m_level->getName(), m_level->getScore(), getUsedEnergy());
 		ImGui::Text("x = %f; y = %f", m_level->getSize().x, m_level->getSize().y);
 		
 		std::vector<std::wstring> files;
@@ -111,6 +111,10 @@ void LevelMgr::showImGuiWindow(bool* window)
 			{
 				ent->background->showInfo();
 			}
+		}
+		if (ImGui::Button("clean All Cases"))
+		{
+			m_level->clearAllCases();
 		}
 		
 	}
@@ -191,4 +195,14 @@ void LevelMgr::createJewels(uint32_t nbr)
 CaseHandler* LevelMgr::getHigherScoreCase()
 {
 	return m_level->getHigherScoreCase();
+}
+
+void LevelMgr::cleanCase(Entity* ent)
+{
+	m_level->cleanCase(ent);
+}
+
+void LevelMgr::pickCase(Entity* ent)
+{
+	m_level->pickCase(ent);
 }

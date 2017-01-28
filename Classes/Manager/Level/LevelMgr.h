@@ -42,6 +42,16 @@ class LevelMgr : public Manager
 		
 		CaseHandler* getHigherScoreCase();
 
+		const sf::Vector2f getSizeCase() const { return m_level->getCaseSize(); }
+
+		const sf::Vector2f getPositionLevel() const { return m_level->getPosition(); }
+		const sf::Vector2f getSizeLevel() const { return m_level->getSizeLevel(); }
+
+		void cleanCase(Entity* ent);
+		void pickCase(Entity* ent);
+		void usedEnergy(uint32_t nbr = 1) { m_level->useEnergy(nbr); }
+		const uint32_t getUsedEnergy() const { return m_level->getUsedEnergy(); }
+
     protected:
     private:
         // Function

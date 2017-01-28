@@ -144,6 +144,7 @@ void Entity::paint()
 
 void Entity::update(const float dt)
 {
+	moveToTarget(dt);
 	if (!m_state.m_live.m_collidable && isEdition())
 	{
 		move(getMotion());
@@ -442,6 +443,23 @@ const sf::FloatRect Entity::getGlobalBounds() const
 							m_state.m_live.m_currentPosition.y, 
 							m_state.m_live.m_width * m_state.m_live.m_scale.x, 
 							m_state.m_live.m_height * m_state.m_live.m_scale.y);
+}
+
+void Entity::moveToTarget(const float dt)
+{
+	if (getType() != EntityType::Anchor)
+	{
+
+		if (m_state.m_live.m_targetPos != getPosition())
+		{
+			auto pos = Vector2(getPosition().x, getPosition().y);
+			Vector2 vect = m_state.m_live.m_targetPos - pos;
+			Vector2 DesiredVelocity = vect.norm() * m_state.m_live.m_maxSpeed;
+
+			Vector2 lastVelocity = DesiredVelocity * dt * 10 * m_state.m_live.m_speed;
+			move(lastVelocity);
+		}
+	}
 }
 
 void Entity::sleep() 
@@ -763,6 +781,7 @@ void Entity::build(const char* path)
 		pos.x = posArray[0].GetFloat();
 		pos.y = posArray[1].GetFloat();
 		setPosition(pos);
+		setTargetPos(pos);
 	}
 
 	if (document.HasMember("Type"))
@@ -982,6 +1001,11 @@ void Entity::showImGuiWindow()
 		
 
 			setPosition(Vector2(x, y));
+			if (x != m_state.m_live.m_currentPosition.x && y != m_state.m_live.m_currentPosition.y)
+			{
+				setTargetPos(Vector2(x, y));
+			}
+
 			m_state.m_live.m_angle = rot * RADTODEG;
 
 			char** items = (char**)malloc(sizeof(char*) * entityAnimationStateToString.size());
@@ -1092,6 +1116,10 @@ void Entity::move(Vector2 motion)
 		
 		m_state.m_live.m_lastPosition = m_state.m_live.m_currentPosition;
 		m_state.m_live.m_currentPosition += motion;
+		if (Vector2(m_state.m_live.m_targetPos - m_state.m_live.m_currentPosition).mag() < 3.0)
+		{
+			m_state.m_live.m_currentPosition = m_state.m_live.m_targetPos;
+		}
 		m_state.m_live.m_motion += motion;
 		if (!isFall() && motion.y < 0.0f)
 		{
@@ -1139,4 +1167,9 @@ const bool Entity::isInAction(EntityAction::Enum action) const
 { 
 	auto test = (m_state.m_live.m_action & action) == action;
 	return (m_state.m_live.m_action & action) == action; 
+}
+
+const bool Entity::hasTarget() const 
+{ 
+	return (Vector2)m_state.m_live.m_currentPosition != m_state.m_live.m_targetPos; 
 }

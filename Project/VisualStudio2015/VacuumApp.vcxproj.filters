@@ -99,6 +99,9 @@
     <ClInclude Include="..\..\Classes\Actions\CommandAttack.h">
       <Filter>Classes\Actions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Classes\Actions\CommandClean.h">
+      <Filter>Classes\Actions</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Classes\Actions\CommandInput.h">
       <Filter>Classes\Actions</Filter>
     </ClInclude>
@@ -106,6 +109,9 @@
       <Filter>Classes\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\Actions\CommandMove.h">
+      <Filter>Classes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Actions\CommandPickUp.h">
       <Filter>Classes\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\Actions\CommandSound.h">
@@ -266,6 +272,9 @@
     <ClCompile Include="..\..\Classes\Actions\CommandAttack.cpp">
       <Filter>Classes\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\Actions\CommandClean.cpp">
+      <Filter>Classes\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Classes\Actions\CommandInput.cpp">
       <Filter>Classes\Actions</Filter>
     </ClCompile>
@@ -273,6 +282,9 @@
       <Filter>Classes\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\Actions\CommandMove.cpp">
+      <Filter>Classes\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\Actions\CommandPickUp.cpp">
       <Filter>Classes\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\Actions\CommandSound.cpp">
