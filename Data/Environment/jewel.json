@@ -1,0 +1,20 @@
+{
+	"Name" : "Jewel",
+	"Width" : 30,
+	"Height" : 30,
+	"Speed" : 1.0,
+	"Position" : [180.0, 180.0],
+	"State" : "IDLE_RIGHT",	
+	"Movable" : false,
+	"Animated" : true,
+	"Element" : "Jewel",
+	"BackgroundLevel" : 10,
+	"Animations" : [
+		{
+			"State" : "IDLE_RIGHT",
+			"Frame" : 7,
+			"Line" : 1,
+			"Time" : 0.1
+		}
+	]
+}

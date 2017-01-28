@@ -1,0 +1,20 @@
+{
+	"Name" : "Dust",
+	"Width" : 30,
+	"Height" : 28,
+	"Speed" : 1.0,
+	"Position" : [180.0, 180.0],
+	"State" : "IDLE_RIGHT",	
+	"Movable" : false,
+	"Animated" : true,
+	"Element" : "Dust",
+	"BackgroundLevel" : 10,
+	"Animations" : [
+		{
+			"State" : "IDLE_RIGHT",
+			"Frame" : 4,
+			"Line" : 1,
+			"Time" : 0.1
+		}
+	]
+}
