@@ -6,6 +6,7 @@
 	"Position" : [235.0, 235.0],
 	"State" : "IDLE_RIGHT",	
 	"Movable" : true,
+	"Type" : "Movable",
 	"Animations" : [
 		{
 			"State" : "IDLE_RIGHT",

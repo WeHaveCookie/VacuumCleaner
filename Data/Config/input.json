@@ -1,7 +1,7 @@
 {
 	"kbA" : "",
 	"kbB" : "",
-	"kbC" : "",
+	"kbC" : "Clean",
 	"kbD" : "MoveRight",
 	"kbE" : "",
 	"kbF" : "",
@@ -14,7 +14,7 @@
 	"kbM" : "",
 	"kbN" : "",
 	"kbO" : "",
-	"kbP" : "",
+	"kbP" : "PickUp",
 	"kbQ" : "MoveLeft",
 	"kbR" : "",
 	"kbS" : "MoveDown",

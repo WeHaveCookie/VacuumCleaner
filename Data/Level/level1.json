@@ -3,6 +3,7 @@
 	"Size" : [5,5],
 	"CaseSize" : [120.0, 120.0],
 	"Position" : [100.0, 100.0],
+	"Music" : "Data/Sound/Ambiant/theme.ogg",
 	"Path" : "Data/Environment/case.json",
 	"Backgrounds" : [
 	],
