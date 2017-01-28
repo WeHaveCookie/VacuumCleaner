@@ -88,7 +88,7 @@ int CaseHandler::clean()
 	return score;
 }
 
-int CaseHandler::cleanJewels()
+int CaseHandler::pickJewels()
 {
 	auto it = entities.begin();
 	int score = 0;
@@ -296,15 +296,7 @@ void Level::registrerIntoGrid(Entity* ent, sf::Vector2i pos)
 	m_grid[pos.x][pos.y]->pushEnt(ent);
 }
 
-void Level::cleanCase(sf::Vector2i pos)
-{
-	m_grid[pos.x][pos.y]->clean();
-}
 
-void Level::removeJewels(sf::Vector2i pos)
-{
-	m_grid[pos.x][pos.y]->cleanJewels();
-}
 
 CaseHandler* Level::getHigherScoreCase()
 {
@@ -343,7 +335,7 @@ void Level::cleanCase(Entity* ent)
 
 void Level::pickCase(Entity* ent)
 {
-	m_score += PhysicMgr::getSingleton()->getCase(ent)->cleanJewels();
+	m_score += PhysicMgr::getSingleton()->getCase(ent)->pickJewels();
 	useEnergy();
 }
 

@@ -28,7 +28,7 @@ struct CaseHandler
 
 	void pushEnt(Entity* ent);
 	int clean();
-	int cleanJewels();
+	int pickJewels();
 	void erase(uint32_t id);
 	const uint32_t getScore() const;
 	void cleanAll();
@@ -51,8 +51,7 @@ public:
 	void createGrid(const char* path);
 	const std::vector<std::vector<CaseHandler*>> getGrid() const;
 	void registrerIntoGrid(Entity* ent, sf::Vector2i pos);
-	void cleanCase(sf::Vector2i pos);
-	void removeJewels(sf::Vector2i pos);
+
 	CaseHandler* getHigherScoreCase();
 	const sf::Vector2f getCaseSize() const { return m_caseSize; }
 	const sf::Vector2f getPosition() const { return m_position; }

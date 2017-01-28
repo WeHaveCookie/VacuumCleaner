@@ -951,7 +951,7 @@ void Entity::showImGuiWindow()
 				ImGui::SameLine();
 				if (ImGui::Button("Take"))
 				{
-					m_state.m_live.m_caseHandler->cleanJewels();
+					m_state.m_live.m_caseHandler->pickJewels();
 				}
 				ImGui::Separator();
 				for (auto& ent : m_state.m_live.m_caseHandler->entities)
