@@ -49,6 +49,10 @@ void GameMgr::init()
 
 	m_updateEnvironmentDelay = 2.0f;
 	m_updateEnvironmentTimer = 0.0f;
+	m_dustsPerSpawn = 2;
+	m_jewelsPerSpawn = 1;
+	m_jewelFactor = 5;
+	m_dustFactor = 10;
 }
 
 void GameMgr::process(const float dt)
@@ -64,7 +68,7 @@ void GameMgr::process(const float dt)
 	static std::vector<uint32_t> ids;
 
 	auto ent = entityMgr->getMainCharacter();
-
+	generateEnvironment(dt);
 	m_processTime = clock.getElapsedTime();
 }
 
@@ -98,6 +102,14 @@ void GameMgr::showImGuiWindow(bool* window)
 			ImGui::Text("GameMgr : %f ms", getProcessTime().asMicroseconds() / 1000.0f);
 			ImGui::Text("SoundMgr : %f ms", SoundMgr::getSingleton()->getProcessTime().asMicroseconds() / 1000.0f);
 		}
+
+		ImGui::InputFloat("Spawn Delay", &m_updateEnvironmentDelay);
+
+		ImGui::InputInt("Dusts per Spawn", &m_dustsPerSpawn);
+		ImGui::InputInt("Jewels per Spawn", &m_jewelsPerSpawn);
+		ImGui::InputInt("Dust Factor", &m_dustFactor);
+		ImGui::InputInt("Jewel Factor", &m_jewelFactor);
+
 	}
 	ImGui::End();
 }
@@ -152,8 +164,8 @@ void GameMgr::generateEnvironment(const float dt)
 	if (m_updateEnvironmentTimer > m_updateEnvironmentDelay)
 	{
 		m_updateEnvironmentTimer = 0.0f;
-		auto nbrDusts = randIntBorned(0, 5);
-		auto nbrJewels = randIntBorned(0, 3);
+		auto nbrDusts = randIntBorned(0, m_dustsPerSpawn + 1);
+		auto nbrJewels = randIntBorned(0, m_jewelsPerSpawn + 1);
 		LevelMgr::getSingleton()->createDusts(nbrDusts);
 		LevelMgr::getSingleton()->createJewels(nbrJewels);
 	}

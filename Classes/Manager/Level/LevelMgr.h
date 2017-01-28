@@ -39,6 +39,8 @@ class LevelMgr : public Manager
 
 		void createDusts(uint32_t nbr);
 		void createJewels(uint32_t nbr);
+		
+		CaseHandler* getHigherScoreCase();
 
     protected:
     private:

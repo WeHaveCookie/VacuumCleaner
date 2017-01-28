@@ -3,7 +3,7 @@
 	"Width" : 90,
 	"Height" : 90,
 	"Speed" : 1.0,
-	"Position" : [180.0, 180.0],
+	"Position" : [235.0, 235.0],
 	"State" : "IDLE_RIGHT",	
 	"Movable" : true,
 	"Animations" : [

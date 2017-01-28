@@ -1,4 +1,5 @@
 #pragma once
+#include "Level/Level.h"
 
 namespace EntityAction
 {
@@ -59,9 +60,9 @@ namespace EntityElement
 {
 	enum Enum
 	{
-		none,
-		dust,
-		jewel
+		None,
+		Dust,
+		Jewel
 	};
 }
 
@@ -283,6 +284,7 @@ class Entity
 		void setBackgroundLevel(uint32_t level) { m_state.m_live.m_backgroundLevel = level; }
 		void showImGuiWindow();
 		EntityElement::Enum getElement() { return m_state.m_live.m_element; }
+		void setCaseHandler(CaseHandler* cHandler) { m_state.m_live.m_caseHandler = cHandler; }
 
 	protected:
 		static uint32_t		newUID;
@@ -339,6 +341,7 @@ class Entity
 				EntityAction::Enum										m_action;
 				uint32_t												m_backgroundLevel; //  0 => foreground | Higher => background
 				EntityElement::Enum										m_element;
+				CaseHandler*											m_caseHandler;
 
 				void clear()
 				{
@@ -356,6 +359,7 @@ class Entity
 					}
 					m_animate = true;
 					m_collisionState = CollisionState::None;
+					m_caseHandler = nullptr;
 				}
 			} m_live;
 

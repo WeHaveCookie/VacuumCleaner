@@ -102,6 +102,17 @@ void LevelMgr::showImGuiWindow(bool* window)
 			free(filesLabel[i]);
 		}
 		free(filesLabel);
+
+		auto ent = getHigherScoreCase();
+		if (ent != nullptr)
+		{
+			ImGui::Text("Higher Score : %i", ent->getScore());
+			if (ImGui::IsItemClicked())
+			{
+				ent->background->showInfo();
+			}
+		}
+		
 	}
 	ImGui::End();
 }
@@ -159,14 +170,25 @@ void LevelMgr::unloadLevel()
 
 void LevelMgr::createDusts(uint32_t nbr)
 {
-	auto ent = EntityMgr::getSingleton()->createEntity("Data/Character/dust.json");
-	sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
-	m_level->registrerIntoGrid(ent, pos); 
+	for (uint32_t i = 0; i < nbr; i++)
+	{
+		auto ent = EntityMgr::getSingleton()->createEntity("Data/Environment/dust.json");
+		sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
+		m_level->registrerIntoGrid(ent, pos);
+	}
 }
 
 void LevelMgr::createJewels(uint32_t nbr)
 {
-	auto ent = EntityMgr::getSingleton()->createEntity("Data/Character/jewel.json");
-	sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
-	m_level->registrerIntoGrid(ent, pos);
+	for (uint32_t i = 0; i < nbr; i++)
+	{
+		auto ent = EntityMgr::getSingleton()->createEntity("Data/Environment/jewel.json");
+		sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
+		m_level->registrerIntoGrid(ent, pos);
+	}
+}
+
+CaseHandler* LevelMgr::getHigherScoreCase()
+{
+	return m_level->getHigherScoreCase();
 }

@@ -11,6 +11,7 @@
 #include "Utils/VectorUtils.h"
 #include "Actions/Command.h"
 #include "Manager/Action/CommandMgr.h"
+#include "Manager/Entity/EntityMgr.h"
 #include "Utils/jsonUtils.h"
 
 #define ERROR_TEXTURE "Data/Texture/error.png"
@@ -51,10 +52,24 @@ std::map<std::string, EntityType::Enum> stringToEntityType =
 	{"Movable", EntityType::Movable },
 };
 
+std::map<std::string, EntityElement::Enum> stringToEntityElement =
+{
+	{ "None", EntityElement::None },
+	{ "Dust", EntityElement::Dust },
+	{ "Jewel", EntityElement::Jewel }
+};
+
 std::vector<const char*> entityTypeToString =
 {
 	"Anchor",
 	"Movable",
+};
+
+std::vector<const char*> EntityElementToString =
+{
+	"None",
+	"Dust",
+	"Jewel"
 };
 
 std::map<std::string, EntityAnimationState::Enum> stringToEntityAnimationState =
@@ -759,6 +774,15 @@ void Entity::build(const char* path)
 		m_state.m_live.m_type = EntityType::Anchor;
 	}
 
+	if (document.HasMember("Element"))
+	{
+		m_state.m_live.m_element = stringToEntityElement[document["Element"].GetString()];
+	}
+	else
+	{
+		m_state.m_live.m_element = EntityElement::None;
+	}
+
 	m_state.m_live.m_vx = 0.0f;
 	m_state.m_live.m_vGrav = 0.40f;
 	m_state.m_live.m_vJump = -15.0f;
@@ -895,7 +919,33 @@ void Entity::showImGuiWindow()
 		std::string name = std::to_string(getUID()) + " : " + m_state.m_live.m_name;
 		if (ImGui::Begin(name.c_str(), &m_displayInfo, ImGuiWindowFlags_AlwaysAutoResize))
 		{
-			ImGui::InputFloat("Speed", &m_state.m_live.m_speed);
+			if (m_state.m_live.m_caseHandler != nullptr)
+			{
+				ImGui::Text("Dusts : %i", m_state.m_live.m_caseHandler->dusts);
+				ImGui::Text("Jewels : %i", m_state.m_live.m_caseHandler->jewels);
+				ImGui::Text("Score : %i", m_state.m_live.m_caseHandler->getScore());
+
+				if (ImGui::Button("Clean"))
+				{
+					m_state.m_live.m_caseHandler->clean();
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Take"))
+				{
+					m_state.m_live.m_caseHandler->cleanJewels();
+				}
+				ImGui::Separator();
+				for (auto& ent : m_state.m_live.m_caseHandler->entities)
+				{
+					auto entPtr = EntityMgr::getSingleton()->getEntity(ent);
+					ImGui::Text("%i - %s", ent, entPtr->getName());
+					if (ImGui::IsItemClicked())
+					{
+						entPtr->showInfo();
+					}
+				}
+			}
+			
 			int backgroundLevel = m_state.m_live.m_backgroundLevel;
 			ImGui::InputInt("BackgroundLevel", &backgroundLevel);
 			(backgroundLevel < 0) ? setBackgroundLevel(0) : setBackgroundLevel(backgroundLevel);
@@ -921,20 +971,7 @@ void Entity::showImGuiWindow()
 			free(label);
 
 			ImGui::Text("Type : %s", entityTypeToString[m_state.m_live.m_type]);
-			ImGui::Text("Collision : %i", m_state.m_live.m_collisionState);
-			ImGui::Text("Sleep : %s - %fms", (m_state.m_live.m_sleep) ? "True" : "False", m_state.m_live.m_sleepTime);
-			ImGui::SameLine();
-			if (ImGui::Button("Wake up"))
-			{
-				m_state.m_live.m_sleepTime = 0;
-				addMotion(Vector2(0.0f, -1.0f));
-			}
 			
-
-			ImGui::Text("Fall : %s", (isFall()) ? "True" : "False");
-			ImGui::Text("Last motion : x = %f | y = %f", m_state.m_live.m_lastMotion.x, m_state.m_live.m_lastMotion.y);
-			ImGui::Text("Last impulse : x = %f | y = %f", m_state.m_live.m_lastImpulse.x, m_state.m_live.m_lastImpulse.y);
-			ImGui::Text("Last Position : x = %f | y = %f", m_state.m_live.m_lastPosition.x, m_state.m_live.m_lastPosition.y);
 			ImGui::Text("Position");
 			float x = m_state.m_live.m_currentPosition.x;
 			float y = m_state.m_live.m_currentPosition.y;
@@ -943,24 +980,6 @@ void Entity::showImGuiWindow()
 			float rot = m_state.m_live.m_angle * DEGTORAD;
 			ImGui::SliderAngle("Rotation", &rot);
 		
-			if(ImGui::CollapsingHeader("JumpParam"))
-			{
-				ImGui::InputFloat("vx", &m_state.m_live.m_vx);
-				ImGui::InputFloat("vGrav", &m_state.m_live.m_vGrav);
-				ImGui::InputFloat("vJump", &m_state.m_live.m_vJump);
-				ImGui::InputFloat("vy", &m_state.m_live.m_vy);
-				ImGui::InputFloat("vMax", &m_state.m_live.m_vMax);
-			}
-			if (ImGui::Button("Jump"))
-			{
-				jump();
-			}
-			ImGui::SameLine();
-			if (ImGui::Button("Attack"))
-			{
-				attack();
-			}
-			
 
 			setPosition(Vector2(x, y));
 			m_state.m_live.m_angle = rot * RADTODEG;

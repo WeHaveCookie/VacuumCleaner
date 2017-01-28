@@ -27,6 +27,9 @@ class GameMgr : public Manager
 		Entity* getEntityPlayer(uint32_t id = 0);
 		void setNumberPlayer(uint32_t nbr);
 
+		const int getDustFactor() const { return m_dustFactor; }
+		const int getJewelFactor() const { return m_jewelFactor; }
+
     protected:
     private:
 		void generateEnvironment(const float dt);
@@ -43,4 +46,8 @@ class GameMgr : public Manager
 
 		float					m_updateEnvironmentTimer;
 		float					m_updateEnvironmentDelay;
+		int						m_dustsPerSpawn;
+		int						m_jewelsPerSpawn;
+		int						m_dustFactor;
+		int						m_jewelFactor;
 };

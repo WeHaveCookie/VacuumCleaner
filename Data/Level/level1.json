@@ -1,13 +1,10 @@
 {
 	"Name" : "Level1",
 	"Size" : [5,5],
-	"CaseSize" : [60.0, 60.0],
+	"CaseSize" : [120.0, 120.0],
+	"Position" : [100.0, 100.0],
 	"Path" : "Data/Environment/case.json",
 	"Backgrounds" : [
-		{
-			"Path" : "Data/Background/grid.png",
-			"BackgroundLevel" : 0 
-		}
 	],
 	"Entitys" : [
 	]

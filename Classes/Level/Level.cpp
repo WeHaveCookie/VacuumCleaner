@@ -7,6 +7,7 @@
 #include "Utils/jsonUtils.h"
 #include "Manager/Entity/EntityMgr.h"
 #include "Utils/containerUtils.h"
+#include "Manager/Game/GameMgr.h"
 
 void Background::paint()
 {
@@ -18,48 +19,84 @@ void Background::paint()
 void CaseHandler::pushEnt(Entity* ent)
 {
 	entities.push_back(ent->getUID());
-	if (ent->getElement() == EntityElement::dust)
+	if (ent->getElement() == EntityElement::Dust)
 	{
 		dusts++;
 	}
-	else if (ent->getElement() == EntityElement::jewel)
+	else if (ent->getElement() == EntityElement::Jewel)
 	{
 		jewels++;
+	}
+	ent->setPosition(currentPos);
+	currentPos.x = ent->getPosition().x + ent->getGlobalBounds().width;
+	if (currentPos.x > background->getPosition().x + (background->getGlobalBounds().width - ent->getGlobalBounds().width))
+	{
+		currentPos.y += ent->getGlobalBounds().height;
+		if (currentPos.y > background->getPosition().y + (background->getGlobalBounds().height - ent->getGlobalBounds().height))
+		{
+			currentPos = Vector2(0.0, 0.0);
+		}
+		currentPos.x = background->getPosition().x;
+	}
+}
+
+void CaseHandler::erase(uint32_t id)
+{
+	auto it = entities.begin();
+	for (auto& ent : entities)
+	{
+		if (ent == id)
+		{
+			entities.erase(it);
+			break;
+		}
+		it++;
 	}
 }
 
 void CaseHandler::clean()
 {
+	std::vector < uint32_t > deleteEntity;
 	bool dustRemove = false;
 	for (auto& ent : entities)
 	{
-		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::dust && !dustRemove)
+		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::Dust && !dustRemove)
 		{
 			dustRemove = true;
 			EntityMgr::getSingleton()->deleteEntity(ent);
+			deleteEntity.push_back(ent);
+			dusts--;
 		}
 		
-		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() != EntityElement::dust)
+		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() != EntityElement::Dust)
 		{
 			EntityMgr::getSingleton()->deleteEntity(ent);
+			deleteEntity.push_back(ent);
+			jewels--;
 		}
-		
 	}
-	entities.clear();
-	dusts = 0;
-	jewels = 0;
+	
+	for (auto& del : deleteEntity)
+	{
+		erase(del);
+	}
 }
 
 void CaseHandler::cleanJewels()
 {
 	for (auto& ent : entities)
 	{
-		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::jewel)
+		if (EntityMgr::getSingleton()->getEntity(ent)->getElement() == EntityElement::Jewel)
 		{
 			EntityMgr::getSingleton()->deleteEntity(ent);
 		}
 	}
 	jewels = 0;
+}
+
+const uint32_t CaseHandler::getScore() const
+{
+	return dusts * GameMgr::getSingleton()->getDustFactor() + jewels * GameMgr::getSingleton()->getJewelFactor();
 }
 
 Level::Level()
@@ -115,6 +152,9 @@ bool Level::load(const char* path)
 
 	auto caseSizePtr = &m_caseSize;
 	checkAndAffect(&document, "CaseSize", ValueType::Vector2, (void**)&caseSizePtr);
+
+	auto positionPtr = &m_position;
+	checkAndAffect(&document, "Position", ValueType::Vector2, (void**)&positionPtr);
 
 	if (document.HasMember("Path"))
 	{
@@ -199,38 +239,57 @@ void Level::createGrid(const char* path)
 	m_grid.clear();
 	for (int i = 0; i < m_size.x; i++)
 	{
+		std::vector<CaseHandler*> line;
 		for (int j = 0; j < m_size.y; j++)
 		{
 			auto back = EntityMgr::getSingleton()->createEntity(path);
-			back->setPosition(Vector2(m_caseSize.x * i, m_caseSize.y * j));
-			CaseHandler cHandler;
-			cHandler.dusts = 0;
-			cHandler.jewels = 0;
-			cHandler.background = back;
-			m_grid.at(std::make_pair(i, j)) = cHandler;
+			back->setPosition(Vector2(m_caseSize.x * i + m_position.x, m_caseSize.y * j + m_position.y));
+			CaseHandler* cHandler = new CaseHandler();
+			cHandler->dusts = 0;
+			cHandler->jewels = 0;
+			cHandler->background = back;
+			cHandler->currentPos = back->getPosition();
+			line.push_back(cHandler);
+			back->setCaseHandler(cHandler);
 		}
+		m_grid.push_back(line);
 	}
 }
 
-const std::map<std::pair<uint32_t, uint32_t>, CaseHandler> Level::getGrid() const
+const std::vector<std::vector<CaseHandler*>> Level::getGrid() const
 {
 	return m_grid;
 }
 
 void Level::registrerIntoGrid(Entity* ent, sf::Vector2i pos)
 {
-	auto cases = m_grid.at(std::make_pair(pos.x,pos.y));
-	cases.pushEnt(ent);
+	m_grid[pos.x][pos.y]->pushEnt(ent);
 }
 
 void Level::cleanCase(sf::Vector2i pos)
 {
-	auto cases = m_grid.at(std::make_pair(pos.x, pos.y));
-	cases.clean();
+	m_grid[pos.x][pos.y]->clean();
 }
 
 void Level::removeJewels(sf::Vector2i pos)
 {
-	auto cases = m_grid.at(std::make_pair(pos.x, pos.y));
-	cases.cleanJewels();
+	m_grid[pos.x][pos.y]->cleanJewels();
+}
+
+CaseHandler* Level::getHigherScoreCase()
+{
+	uint32_t score = 0;
+	CaseHandler* ans = nullptr;
+	for (auto& line : m_grid)
+	{
+		for (auto& handler : line)
+		{
+			if (handler->getScore() > score)
+			{
+				score = handler->getScore();
+				ans = handler;
+			}
+		}
+	}
+	return ans;
 }
