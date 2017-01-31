@@ -447,6 +447,7 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
     <ClInclude Include="..\..\Classes\Graph\NodeTypeEnumerations.h" />
     <ClInclude Include="..\..\Classes\Graph\SparseGraph.h" />
     <ClInclude Include="..\..\Classes\HUD\Menu.h" />
+    <ClInclude Include="..\..\Classes\IA\Brain.h" />
     <ClInclude Include="..\..\Classes\Level\Level.h" />
     <ClInclude Include="..\..\Classes\Level\Quadtree.h" />
     <ClInclude Include="..\..\Classes\Manager\Action\CommandMgr.h" />
@@ -507,6 +508,7 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
     <ClCompile Include="..\..\Classes\EtherealEngineManagers.cpp" />
     <ClCompile Include="..\..\Classes\Files\Reader.cpp" />
     <ClCompile Include="..\..\Classes\HUD\Menu.cpp" />
+    <ClCompile Include="..\..\Classes\IA\Brain.cpp" />
     <ClCompile Include="..\..\Classes\Level\Level.cpp" />
     <ClCompile Include="..\..\Classes\Level\Quadtree.cpp" />
     <ClCompile Include="..\..\Classes\Manager\Action\CommandMgr.cpp" />
@@ -539,16 +541,7 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
     <ClCompile Include="..\..\Classes\Utils\ImGui\imgui_draw.cpp" />
     <ClCompile Include="..\..\Classes\Utils\Vector2.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Optimized|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Final|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Optimized|x64'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

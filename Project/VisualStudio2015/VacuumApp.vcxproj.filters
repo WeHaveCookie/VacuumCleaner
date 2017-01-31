@@ -25,6 +25,9 @@
     <Filter Include="Classes\HUD">
       <UniqueIdentifier>{C33B1A54-2FF1-9249-B8E5-8C20249A894D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\IA">
+      <UniqueIdentifier>{AC47F195-98FF-32E3-0107-0C3FEDDDCDD3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\Level">
       <UniqueIdentifier>{BA42EAC3-2603-66FA-EF3D-AF775BBDAAD6}</UniqueIdentifier>
     </Filter>
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\HUD\Menu.h">
       <Filter>Classes\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\IA\Brain.h">
+      <Filter>Classes\IA</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\Level\Level.h">
       <Filter>Classes\Level</Filter>
@@ -337,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\HUD\Menu.cpp">
       <Filter>Classes\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\IA\Brain.cpp">
+      <Filter>Classes\IA</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\Level\Level.cpp">
       <Filter>Classes\Level</Filter>
