@@ -19,6 +19,9 @@
     <Filter Include="Classes\Files">
       <UniqueIdentifier>{B5B67FC3-2177-FBF9-EAB1-4477563140D6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Graph">
+      <UniqueIdentifier>{349196C3-A051-12FA-698C-5B77D50B57D6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\HUD">
       <UniqueIdentifier>{C33B1A54-2FF1-9249-B8E5-8C20249A894D}</UniqueIdentifier>
     </Filter>
@@ -134,6 +137,27 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\Files\Reader.h">
       <Filter>Classes\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\AStarHeuristicPolicies.h">
+      <Filter>Classes\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\GraphAlgorithms.h">
+      <Filter>Classes\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\GraphEdgeTypes.h">
+      <Filter>Classes\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\GraphNodeTypes.h">
+      <Filter>Classes\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\HandyGraphFunctions.h">
+      <Filter>Classes\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\NodeTypeEnumerations.h">
+      <Filter>Classes\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Graph\SparseGraph.h">
+      <Filter>Classes\Graph</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\HUD\Menu.h">
       <Filter>Classes\HUD</Filter>

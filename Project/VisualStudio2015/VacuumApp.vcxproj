@@ -439,6 +439,13 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
     <ClInclude Include="..\..\Classes\Entity\Pnj\Pnj.h" />
     <ClInclude Include="..\..\Classes\EtherealEngineManagers.h" />
     <ClInclude Include="..\..\Classes\Files\Reader.h" />
+    <ClInclude Include="..\..\Classes\Graph\AStarHeuristicPolicies.h" />
+    <ClInclude Include="..\..\Classes\Graph\GraphAlgorithms.h" />
+    <ClInclude Include="..\..\Classes\Graph\GraphEdgeTypes.h" />
+    <ClInclude Include="..\..\Classes\Graph\GraphNodeTypes.h" />
+    <ClInclude Include="..\..\Classes\Graph\HandyGraphFunctions.h" />
+    <ClInclude Include="..\..\Classes\Graph\NodeTypeEnumerations.h" />
+    <ClInclude Include="..\..\Classes\Graph\SparseGraph.h" />
     <ClInclude Include="..\..\Classes\HUD\Menu.h" />
     <ClInclude Include="..\..\Classes\Level\Level.h" />
     <ClInclude Include="..\..\Classes\Level\Quadtree.h" />
@@ -531,16 +538,7 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
     <ClCompile Include="..\..\Classes\Utils\ImGui\imgui_draw.cpp" />
     <ClCompile Include="..\..\Classes\Utils\Vector2.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Optimized|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Final|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Optimized|x64'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
