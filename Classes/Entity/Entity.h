@@ -361,7 +361,7 @@ class Entity
 						auto ste = static_cast<EntityAnimationState::Enum>(i);
 						sf::Sprite spr;
 						spr.setTexture(m_errorTexture);
-						spr.setTextureRect(sf::IntRect(0 , 0, m_width, m_height));
+						spr.setTextureRect(sf::IntRect(0 , 0, 20.0f, 20.0f));
 						animHandler.m_sprite = spr;
 						m_animations[ste].m_animation.push_back(animHandler);
 					}

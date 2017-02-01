@@ -85,6 +85,10 @@ int CaseHandler::clean()
 	{
 		erase(del);
 	}
+	if (dusts == 0 && jewels == 0)
+	{
+		currentPos = background->getPosition();
+	}
 	return score;
 }
 
@@ -104,6 +108,10 @@ int CaseHandler::pickJewels()
 		}
 		it++;
 	}
+	if (dusts == 0 && jewels == 0)
+	{
+		currentPos = background->getPosition();
+	}
 	return score;
 }
 
@@ -120,6 +128,7 @@ void CaseHandler::cleanAll()
 	}
 	dusts = 0;
 	jewels = 0;
+	currentPos = background->getPosition();
 	entities.clear();
 }
 

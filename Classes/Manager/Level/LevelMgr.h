@@ -51,6 +51,7 @@ class LevelMgr : public Manager
 		void pickCase(Entity* ent);
 		void usedEnergy(uint32_t nbr = 1) { m_level->useEnergy(nbr); }
 		const uint32_t getUsedEnergy() const { return m_level->getUsedEnergy(); }
+		const std::vector<std::vector<CaseHandler*>> getGrid() const { return m_level->getGrid(); };
 
     protected:
     private:
