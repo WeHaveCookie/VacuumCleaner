@@ -29,6 +29,7 @@ public:
 	Vector2 norm();
 	Vector2& trunc(float max);
 	float ang();
+	float dist(const Vector2 vec) const;
 	float mag();
 	void reassign(float _x, float _y);
 	void reassign(Vector2 vec);

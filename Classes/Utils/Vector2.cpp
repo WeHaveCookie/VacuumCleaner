@@ -141,6 +141,11 @@ float Vector2::mag()
 	return std::sqrt(x*x + y*y);
 }
 
+float Vector2::dist(const Vector2 vec) const
+{
+	return Vector2(vec - *this).mag();
+}
+
 const std::string Vector2::to_str()
 {
 	char tmpbuf[256];

@@ -22,7 +22,7 @@
 #include <stack>
 
 #include "graph/SparseGraph.h"
-#include "misc/PriorityQueue.h"
+#include "utils/PriorityQueue.h"
 
 
 //----------------------------- Graph_SearchDFS -------------------------------

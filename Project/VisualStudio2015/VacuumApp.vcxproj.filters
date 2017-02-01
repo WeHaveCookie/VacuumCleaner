@@ -267,6 +267,9 @@
     <ClInclude Include="..\..\Classes\Utils\ImGui\stb_truetype.h">
       <Filter>Classes\Utils\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Classes\Utils\PriorityQueue.h">
+      <Filter>Classes\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Classes\Utils\Random.h">
       <Filter>Classes\Utils</Filter>
     </ClInclude>
