@@ -1,5 +1,4 @@
-#ifndef GRAPH_NODE_TYPES_H
-#define GRAPH_NODE_TYPES_H
+#pragma once
 //-----------------------------------------------------------------------------
 //
 //  Name:   GraphNodeTypes.h
@@ -106,6 +105,3 @@ public:
   }
   
 };
-
-
-#endif

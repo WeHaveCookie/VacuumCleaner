@@ -1,5 +1,4 @@
-#ifndef ASTAR_HEURISTIC_POLICIES_H
-#define ASTAR_HEURISTIC_POLICIES_H
+#pragma once
 //-----------------------------------------------------------------------------
 //
 //  Name:   AStarHeuristicPolicies.h
@@ -9,7 +8,6 @@
 //  Desc:   class templates defining a heuristic policy for use with the A*
 //          search algorithm
 //-----------------------------------------------------------------------------
-#include "misc/utils.h"
 
 //-----------------------------------------------------------------------------
 //the euclidian heuristic (straight-line distance)
@@ -24,7 +22,7 @@ public:
   template <class graph_type>
   static double Calculate(const graph_type& G, int nd1, int nd2)
   {
-    return Vec2DDistance(G.GetNode(nd1).Pos(), G.GetNode(nd2).Pos());
+    return G.GetNode(nd1).Pos().dist(G.GetNode(nd2).Pos());
   }
 };
 
@@ -44,7 +42,7 @@ public:
   template <class graph_type>
   static double Calculate(const graph_type& G, int nd1, int nd2)
   {
-    return Vec2DDistance(G.GetNode(nd1).Pos(), G.GetNode(nd2).Pos()) * RandInRange(0.9f, 1.1f);
+    return G.GetNode(nd1).Pos().dist(G.GetNode(nd2).Pos()) * randFloatBorned(0.9f, 1.1f);
   }
 };
 
@@ -63,10 +61,3 @@ public:
     return 0;
   }
 };
-
-
-
-
-
-
-#endif

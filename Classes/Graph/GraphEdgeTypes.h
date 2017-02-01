@@ -1,5 +1,4 @@
-#ifndef GRAPH_EDGE_TYPES_H
-#define GRAPH_EDGE_TYPES_H
+#pragma once
 //-----------------------------------------------------------------------------
 //
 //  Name:   GraphEdgeTypes.h
@@ -152,6 +151,3 @@ public:
     return os;
   }
 };
-
-
-#endif

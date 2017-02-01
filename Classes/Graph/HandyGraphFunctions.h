@@ -1,5 +1,5 @@
-#ifndef GRAPH_FUNCS
-#define GRAPH_FUNCS
+#pragma once
+
 //-----------------------------------------------------------------------------
 //
 //  Name:   HandyGraphFunctions.h
@@ -354,5 +354,3 @@ double GetCostliestGraphEdge(const graph_type& G)
 
   return greatest;
 }
-
-#endif

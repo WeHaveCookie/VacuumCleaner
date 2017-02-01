@@ -1,5 +1,4 @@
-#ifndef SPARSEGRAPH_H
-#define SPARSEGRAPH_H
+#pragma once
 #pragma warning (disable:4786)
 //------------------------------------------------------------------------
 //
@@ -839,6 +838,3 @@ bool SparseGraph<node_type, edge_type>::Load(std::ifstream& stream)
 
   return true;
 }
-   
-
-#endif

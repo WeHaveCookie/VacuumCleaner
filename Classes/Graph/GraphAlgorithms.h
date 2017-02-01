@@ -1,5 +1,4 @@
-#ifndef GRAPHALGORITHMS_H
-#define GRAPHALGORITHMS_H
+#pragma once
 #pragma warning (disable:4786)
 
 //------------------------------------------------------------------------
@@ -766,7 +765,3 @@ public:
   std::vector<const Edge*> GetSpanningTree()const{return m_SpanningTree;}
   
 };
-
-
-
-#endif
