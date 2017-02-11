@@ -97,7 +97,7 @@ void Brain::explore()
 	m_debugIntentions.clear();
 	m_exploSparseGraph.update();
 	m_grid = LevelMgr::getSingleton()->getCacheGrid();
-	typedef Graph_SearchAStar<Graph, Heuristic_Dijkstra> AStar;
+	typedef Graph_SearchAStar<Graph, Heuristic_Manhattan> AStar;
 	auto bestCase = getHigherScoreCase();
 	if (bestCase >= 0)
 	{

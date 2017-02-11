@@ -65,14 +65,19 @@ public:
   }
 };
 
-class Heuristic_Yolo
+
+//-----------------------------------------------------------------------------
+//The manhattan heuristic
+//-----------------------------------------------------------------------------
+class Heuristic_Manhattan
 {
 public:
 
 	template <class graph_type>
 	static double Calculate(const graph_type& G, int nd1, int nd2)
 	{
-		return 0;
+		G.GetNode(nd1).pos()
+		return std::abs(G.GetNode(nd2).pos().x - G.GetNode(nd1).pos().x) + std::abs(G.GetNode(nd2).pos().y - G.GetNode(nd1).pos().y);
 	}
 };
 
