@@ -76,8 +76,7 @@ public:
 	template <class graph_type>
 	static double Calculate(const graph_type& G, int nd1, int nd2)
 	{
-		G.GetNode(nd1).pos()
-		return std::abs(G.GetNode(nd2).pos().x - G.GetNode(nd1).pos().x) + std::abs(G.GetNode(nd2).pos().y - G.GetNode(nd1).pos().y);
+		return std::abs(G.GetNode(nd2).Pos().x - G.GetNode(nd1).Pos().x) + std::abs(G.GetNode(nd2).Pos().y - G.GetNode(nd1).Pos().y);
 	}
 };
 
