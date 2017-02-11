@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRAPHALGORITHMS_H
+#define GRAPHALGORITHMS_H
 #pragma warning (disable:4786)
 
 //------------------------------------------------------------------------
@@ -21,7 +22,7 @@
 #include <stack>
 
 #include "graph/SparseGraph.h"
-#include "utils/PriorityQueue.h"
+#include "Utils/PriorityQueue.h"
 
 
 //----------------------------- Graph_SearchDFS -------------------------------
@@ -765,3 +766,7 @@ public:
   std::vector<const Edge*> GetSpanningTree()const{return m_SpanningTree;}
   
 };
+
+
+
+#endif

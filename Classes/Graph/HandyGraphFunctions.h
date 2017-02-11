@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef GRAPH_FUNCS
+#define GRAPH_FUNCS
 //-----------------------------------------------------------------------------
 //
 //  Name:   HandyGraphFunctions.h
@@ -14,19 +14,14 @@
 //-----------------------------------------------------------------------------
 #include <iostream>
 
+#include "misc/Cgdi.h"
+#include "misc/utils.h"
+#include "misc/Stream_Utility_Functions.h"
 #include "Graph/GraphAlgorithms.h"
 #include "Graph/AStarHeuristicPolicies.h"
 
 
-template <class T>
-inline std::string ttos(const T& t, int precision = 2)
-{
-	std::ostringstream buffer;
 
-	buffer << std::fixed << std::setprecision(precision) << t;
-
-	return buffer.str();
-}
 
 
 //--------------------------- ValidNeighbour -----------------------------
@@ -64,10 +59,10 @@ void GraphHelper_AddAllNeighboursToGridNode(graph_type& graph,
       if (ValidNeighbour(nodeX, nodeY, NumCellsX, NumCellsY))
       {
         //calculate the distance to this node
-        Vector2 PosNode      = graph.GetNode(row*NumCellsX+col).Pos();
-        Vector2 PosNeighbour = graph.GetNode(nodeY*NumCellsX+nodeX).Pos();
+        Vector2D PosNode      = graph.GetNode(row*NumCellsX+col).Pos();
+        Vector2D PosNeighbour = graph.GetNode(nodeY*NumCellsX+nodeX).Pos();
 
-        double dist = PosNode.dist(PosNeighbour);
+        double dist = PosNode.Distance(PosNeighbour);
 
         //this neighbour is okay so it can be added
         graph_type::EdgeType NewEdge(row*NumCellsX+col,
@@ -117,7 +112,7 @@ void GraphHelper_CreateGrid(graph_type& graph,
     for (int col=0; col<NumCellsX; ++col)
     {
       graph.AddNode(NavGraphNode<>(graph.GetNextFreeNodeIndex(),
-                                   Vector2(midX + (col*CellWidth),
+                                   Vector2D(midX + (col*CellWidth),
                                    midY + (row*CellHeight))));
 
     }
@@ -140,12 +135,13 @@ void GraphHelper_CreateGrid(graph_type& graph,
 //  draws a graph using the GDI
 //-----------------------------------------------------------------------------
 template <class graph_type>
-void GraphHelper_DrawUsingGDI(const graph_type& graph, sf::Color color, bool DrawNodeIDs = false)
+void GraphHelper_DrawUsingGDI(const graph_type& graph, int color, bool DrawNodeIDs = false)
 {	
 
   //just return if the graph has no nodes
   if (graph.NumNodes() == 0) return;
   
+  gdi->SetPenColor(color);
 
   //draw the nodes 
   graph_type::ConstNodeIterator NodeItr(graph);
@@ -153,21 +149,12 @@ void GraphHelper_DrawUsingGDI(const graph_type& graph, sf::Color color, bool Dra
       !NodeItr.end();
        pN=NodeItr.next())
   {
-	  sf::CircleShape cS(2);
-	  cS->setPosition(pN->Pos());
-	  cS->setFillColor(color);
-
-	  GameMgr::getSingleton()->getMainRenderWindow()->draw(cs);
+    gdi->Circle(pN->Pos(), 2);
 
     if (DrawNodeIDs)
     {
-		sf::Font font;
-		font.loadFromFile("Data/Fonts/wonder.ttf");
-		sf::Text text;
-		text.setFont(font);
-		text.setPosition(sf::Vector2f(pN->Pos().x + 5.0f, pN->Pos().y - 5.0f));
-		text.setString(ttos(pN->Index()));
-		GameMgr::getSingleton()->getMainRenderWindow()->draw(text);
+      gdi->TextColor(200,200,200);
+      gdi->TextAtPos((int)pN->Pos().x+5, (int)pN->Pos().y-5, ttos(pN->Index()));
     }
 
     graph_type::ConstEdgeIterator EdgeItr(graph, pN->Index());
@@ -175,13 +162,7 @@ void GraphHelper_DrawUsingGDI(const graph_type& graph, sf::Color color, bool Dra
         !EdgeItr.end();
         pE=EdgeItr.next())
     {
-		sf::Vertex line[] =
-		{
-			sf::Vertex(pN->Pos()),
-			sf::Vertex(graph.GetNode(pE->To()).Pos())
-		};
-
-		GameMgr::getSingleton()->getMainRenderWindow()->draw(line, 2, sf::Lines);
+      gdi->Line(pN->Pos(), graph.GetNode(pE->To()).Pos());
     }
   }
 }
@@ -206,7 +187,8 @@ void WeightNavGraphNodeEdges(graph_type& graph, int node, double weight)
        pE=ConstEdgeItr.next())
   {
     //calculate the distance between nodes
-    double dist = graph.GetNode(pE->From()).Pos().dist(graph.GetNode(pE->To()).Pos());
+    double dist = Vec2DDistance(graph.GetNode(pE->From()).Pos(),
+                               graph.GetNode(pE->To()).Pos());
 
     //set the cost of this edge
     graph.SetEdgeCost(pE->From(), pE->To(), dist * weight);
@@ -325,7 +307,7 @@ double CalculateAverageGraphEdgeLength(const graph_type& G)
       ++NumEdgesCounted;
 
       //add length of edge to total length
-      TotalLength += G.GetNode(pE->From()).Pos().dist(G.GetNode(pE->To()).Pos());
+      TotalLength += Vec2DDistance(G.GetNode(pE->From()).Pos(), G.GetNode(pE->To()).Pos());
     }
   }
 
@@ -339,7 +321,7 @@ double CalculateAverageGraphEdgeLength(const graph_type& G)
 template <class graph_type>
 double GetCostliestGraphEdge(const graph_type& G)
 {
-  double greatest = std::numeric_limits<double>::min();
+  double greatest = MinDouble;
 
   graph_type::ConstNodeIterator NodeItr(G);
   const graph_type::NodeType* pN;
@@ -354,3 +336,5 @@ double GetCostliestGraphEdge(const graph_type& G)
 
   return greatest;
 }
+
+#endif

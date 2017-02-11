@@ -11,6 +11,10 @@ CommandPickUp::~CommandPickUp()
 void CommandPickUp::init(Entity* ent, void* data)
 {
 	Command::init(ent);
+	if (data != nullptr)
+	{
+		setExeType(*static_cast<CommandExeType::Enum*>(data));
+	}
 }
 
 void CommandPickUp::execute()

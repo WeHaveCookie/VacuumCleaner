@@ -11,6 +11,10 @@ CommandClean::~CommandClean()
 void CommandClean::init(Entity* ent, void* data)
 {
 	Command::init(ent);
+	if (data != nullptr)
+	{
+		setExeType(*static_cast<CommandExeType::Enum*>(data));
+	}
 }
 
 void CommandClean::execute()

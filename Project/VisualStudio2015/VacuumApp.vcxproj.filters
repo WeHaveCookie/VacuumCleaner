@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Classes">
@@ -91,6 +91,9 @@
     <Filter Include="Classes\Utils\ImGui">
       <UniqueIdentifier>{FDF91F03-695B-FD10-F2C8-43C35E2934D0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\misc">
+      <UniqueIdentifier>{AE5976D7-9ABC-057C-4342-3E322F84D1FE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Project">
       <UniqueIdentifier>{5C2CF323-C80B-72BF-D123-FD953D82D820}</UniqueIdentifier>
     </Filter>
@@ -106,6 +109,9 @@
       <Filter>Classes\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\Actions\CommandClean.h">
+      <Filter>Classes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Actions\CommandExplore.h">
       <Filter>Classes\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\Actions\CommandInput.h">
@@ -294,6 +300,9 @@
     <ClInclude Include="..\..\Classes\Utils\wcharUtils.h">
       <Filter>Classes\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Classes\misc\utils.h">
+      <Filter>Classes\misc</Filter>
+    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Project\VisualStudio2015</Filter>
     </ClInclude>
@@ -306,6 +315,9 @@
       <Filter>Classes\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\Actions\CommandClean.cpp">
+      <Filter>Classes\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\Actions\CommandExplore.cpp">
       <Filter>Classes\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\Actions\CommandInput.cpp">

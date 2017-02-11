@@ -29,6 +29,7 @@ public:
 	Entity* getEntity() { return m_entity; }
 	const char* getName() const { return m_name; }
 	const CommandExeType::Enum getExeType() const { return m_exeType; }
+	void setExeType(CommandExeType::Enum type) { m_exeType = type; }
 
 private:
 	Entity*					m_entity;

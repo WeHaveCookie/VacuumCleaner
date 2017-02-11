@@ -7,6 +7,10 @@
 void CommandMove::init(Entity* ent, void* data)
 {
 	Command::init(ent);
+	if (data != nullptr)
+	{
+		setExeType(*static_cast<CommandExeType::Enum*>(data));
+	}
 	m_motion = *static_cast<Vector2*>(data);
 	free(data);
 }

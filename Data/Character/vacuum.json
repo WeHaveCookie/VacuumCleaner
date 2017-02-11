@@ -1,5 +1,6 @@
 {
 	"Name" : "Vacuum",
+	"Brain" : true,
 	"Width" : 90,
 	"Height" : 90,
 	"Speed" : 1.0,

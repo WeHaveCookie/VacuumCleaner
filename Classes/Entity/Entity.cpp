@@ -13,6 +13,7 @@
 #include "Manager/Action/CommandMgr.h"
 #include "Manager/Entity/EntityMgr.h"
 #include "Utils/jsonUtils.h"
+#include "IA/Brain.h"
 
 #define ERROR_TEXTURE "Data/Texture/error.png"
 
@@ -144,6 +145,10 @@ void Entity::paint()
 
 void Entity::update(const float dt)
 {
+	if (m_state.m_live.m_brain != nullptr)
+	{
+		m_state.m_live.m_brain->process(dt);
+	}
 	moveToTarget(dt);
 	if (!m_state.m_live.m_collidable && isEdition())
 	{
@@ -626,6 +631,11 @@ void Entity::build(const char* path)
 	auto backgroundLevelPtr = &m_state.m_live.m_backgroundLevel;
 	uint32_t defaultBackgroundLevel = 0;
 	checkAndAffect(&document, "BackgroundLevel", ValueType::Uint, (void**)&backgroundLevelPtr, (void*)&defaultBackgroundLevel);
+	
+	if (document.HasMember("Brain") && document["Brain"].GetBool())
+	{
+		m_state.m_live.m_brain = new Brain(this);
+	}
 
 	m_state.m_live.m_orientation = EntityOrientation::Right;
 	if (document.HasMember("Orientation"))
@@ -1172,4 +1182,9 @@ const bool Entity::isInAction(EntityAction::Enum action) const
 const bool Entity::hasTarget() const 
 { 
 	return (Vector2)m_state.m_live.m_currentPosition != m_state.m_live.m_targetPos; 
+}
+
+void Entity::explore() 
+{ 
+	m_state.m_live.m_brain->explore(); 
 }

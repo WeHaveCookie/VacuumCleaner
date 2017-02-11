@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPARSEGRAPH_H
+#define SPARSEGRAPH_H
 #pragma warning (disable:4786)
 //------------------------------------------------------------------------
 //
@@ -16,6 +17,7 @@
 #include <iostream>
 
 
+#include "misc/utils.h" 
 #include "graph/NodeTypeEnumerations.h"
 
 
@@ -103,7 +105,15 @@ public:
 
   //returns the number of active + inactive nodes present in the graph
   int   NumNodes()const{return m_Nodes.size();}
-  
+ 
+  void update()
+  {
+	  for (auto& node : m_Nodes)
+	  {
+		  node.update();
+	  }
+  }
+
   //returns the number of active nodes present in the graph (this method's
   //performance can be improved greatly by caching the value)
   int   NumActiveNodes()const
@@ -838,3 +848,6 @@ bool SparseGraph<node_type, edge_type>::Load(std::ifstream& stream)
 
   return true;
 }
+   
+
+#endif

@@ -17,6 +17,7 @@ struct CaseHandler
 	uint32_t	jewels;
 	Entity*		background;
 	Vector2		currentPos;
+	int			index; 
 
 	CaseHandler()
 	{
@@ -49,7 +50,7 @@ public:
 	const char* getName() const { return m_name.c_str(); }
 	const sf::Vector2f getSize() const { return m_size; }
 	void createGrid(const char* path);
-	const std::vector<std::vector<CaseHandler*>> getGrid() const;
+	const std::vector<std::vector<CaseHandler*>> getGrid();
 	void registrerIntoGrid(Entity* ent, sf::Vector2i pos);
 
 	CaseHandler* getHigherScoreCase();

@@ -22,7 +22,8 @@ namespace CommandType
 		LockInput,
 		UnlockInput,
 		PickUp,
-		Clean
+		Clean,
+		Explore
 	};
 }
 

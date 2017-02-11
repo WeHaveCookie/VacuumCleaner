@@ -77,7 +77,7 @@ int CaseHandler::clean()
 			EntityMgr::getSingleton()->deleteEntity(ent);
 			deleteEntity.push_back(ent);
 			jewels--;
-			score += GameMgr::getSingleton()->getLossJewelFactor();
+			score += GameMgr::getSingleton()->getLostJewelFactor();
 		}
 	}
 	
@@ -276,6 +276,7 @@ void Level::unload()
 void Level::createGrid(const char* path)
 {
 	m_grid.clear();
+	int counter = 0;
 	for (int i = 0; i < m_size.x; i++)
 	{
 		std::vector<CaseHandler*> line;
@@ -288,6 +289,7 @@ void Level::createGrid(const char* path)
 			cHandler->jewels = 0;
 			cHandler->background = back;
 			cHandler->currentPos = back->getPosition();
+			cHandler->index = counter++;
 			line.push_back(cHandler);
 			back->setCaseHandler(cHandler);
 		}
@@ -295,8 +297,9 @@ void Level::createGrid(const char* path)
 	}
 }
 
-const std::vector<std::vector<CaseHandler*>> Level::getGrid() const
+const std::vector<std::vector<CaseHandler*>> Level::getGrid()
 {
+	useEnergy();
 	return m_grid;
 }
 

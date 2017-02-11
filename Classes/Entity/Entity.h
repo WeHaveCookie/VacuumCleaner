@@ -76,6 +76,7 @@ namespace EntityOrientation
 }
 	
 class Command;
+class Brain;
 
 struct AnimationHandler {
 	sf::Sprite				m_sprite;
@@ -291,6 +292,8 @@ class Entity
 		void setTargetPos(Vector2 pos) { m_state.m_live.m_targetPos = pos; }
 
 		const bool hasTarget() const;
+		void explore();
+
 
 	protected:
 		static uint32_t		newUID;
@@ -350,6 +353,7 @@ class Entity
 				CaseHandler*											m_caseHandler;
 				Vector2													m_targetPos;
 				float													m_maxSpeed;
+				Brain*													m_brain;
 
 				void clear()
 				{

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRAPH_NODE_TYPES_H
+#define GRAPH_NODE_TYPES_H
 //-----------------------------------------------------------------------------
 //
 //  Name:   GraphNodeTypes.h
@@ -10,7 +11,7 @@
 #include <list>
 #include <ostream>
 #include <fstream>
-#include "Utils/Vector2.h"
+#include "2D/Vector2D.h"
 #include "graph/NodeTypeEnumerations.h"
 
 
@@ -58,7 +59,7 @@ class NavGraphNode : public GraphNode
 protected:
 
   //the node's position
-  Vector2     m_vPosition;
+  Vector2D     m_vPosition;
 
   //often you will require a navgraph node to contain additional information.
   //For example a node might represent a pickup such as armor in which
@@ -75,7 +76,7 @@ public:
   NavGraphNode():m_ExtraInfo(extra_info()){}
 
   NavGraphNode(int      idx,
-               Vector2 pos):GraphNode(idx),
+               Vector2D pos):GraphNode(idx),
                              m_vPosition(pos),
                              m_ExtraInfo(extra_info())
   {}
@@ -90,8 +91,8 @@ public:
 
   virtual ~NavGraphNode(){}
 
-  Vector2   Pos()const{return m_vPosition;}
-  void       SetPos(Vector2 NewPosition){m_vPosition = NewPosition;}
+  Vector2D   Pos()const{return m_vPosition;}
+  void       SetPos(Vector2D NewPosition){m_vPosition = NewPosition;}
 
   extra_info ExtraInfo()const{return m_ExtraInfo;}
   void       SetExtraInfo(extra_info info){m_ExtraInfo = info;}
@@ -105,3 +106,6 @@ public:
   }
   
 };
+
+
+#endif
