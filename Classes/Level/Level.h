@@ -51,6 +51,7 @@ public:
 	const sf::Vector2f getSize() const { return m_size; }
 	void createGrid(const char* path);
 	const std::vector<std::vector<CaseHandler*>> getGrid();
+	const std::vector<std::vector<CaseHandler>> getCacheGrid();
 	void registrerIntoGrid(Entity* ent, sf::Vector2i pos);
 
 	CaseHandler* getHigherScoreCase();
@@ -66,6 +67,10 @@ public:
 	const uint32_t getUsedEnergy() const { return m_usedEnergy; }
 	void useEnergy(uint32_t nbr = 1) { m_usedEnergy += nbr; }
 
+	const int getJewelsLost() const { return m_jewelsLost; }
+	const int getJewelsPick() const { return m_jewelsPick; }
+	const int getSuckUpDusts() const { return m_suckUpDusts; }
+
 private:
 
 	std::string					m_path;
@@ -79,5 +84,8 @@ private:
 	std::vector<std::vector<CaseHandler*>> m_grid;
 	int					m_score;
 	uint32_t			m_usedEnergy;
+	int					m_jewelsLost;
+	int					m_suckUpDusts;
+	int					m_jewelsPick;
 };
 

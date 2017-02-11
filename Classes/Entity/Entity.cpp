@@ -942,6 +942,10 @@ void Entity::release()
 
 void Entity::showImGuiWindow()
 {
+	if (m_state.m_live.m_brain != nullptr)
+	{
+		m_state.m_live.m_brain->showImGuiWindow();
+	}
 	if (m_displayInfo)
 	{
 		bool collidable = m_state.m_live.m_collidable;
@@ -975,6 +979,14 @@ void Entity::showImGuiWindow()
 				}
 			}
 			
+			if (m_state.m_live.m_brain != nullptr)
+			{
+				if (ImGui::Button("Show Brain"))
+				{
+					m_state.m_live.m_brain->showInfo();
+				}
+			}
+
 			int backgroundLevel = m_state.m_live.m_backgroundLevel;
 			ImGui::InputInt("BackgroundLevel", &backgroundLevel);
 			(backgroundLevel < 0) ? setBackgroundLevel(0) : setBackgroundLevel(backgroundLevel);

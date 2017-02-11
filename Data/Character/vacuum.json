@@ -5,6 +5,7 @@
 	"Height" : 90,
 	"Speed" : 1.0,
 	"Position" : [235.0, 235.0],
+	"BackgroundLevel" : 11,
 	"State" : "IDLE_RIGHT",	
 	"Movable" : true,
 	"Type" : "Movable",

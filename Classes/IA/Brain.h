@@ -54,16 +54,25 @@ public:
 	const bool executeAction();
 	void process(const float dt);
 	void explore();
+	void showImGuiWindow();
+
+	void showInfo() { m_displayInfo = !m_displayInfo; }
 
 private:
 	void initGraph();
 	void createIntention(std::list<int> path);
+	int getHigherScoreCase();
 
-	int m_energy;
-	std::queue<Intention::Enum> m_intentions;
-	float m_exploreTime;
-	float m_timer;
-	std::vector<std::vector<CaseHandler*>> m_cacheGrid;
-	Entity*	m_entity;
-	Graph m_exploSparseGraph;
+	bool						m_displayInfo;
+	int							m_energy;
+	std::queue<Intention::Enum>	m_intentions;
+	int							m_currentIntention;
+	std::vector<Intention::Enum> m_debugIntentions;
+	float						m_exploreTime;
+	float						m_timer;
+	float						m_timeToFinishWork;
+	Entity*						m_entity;
+	Graph						m_exploSparseGraph;
+	bool						m_debugPause;
+	std::vector<std::vector<CaseHandler>>	m_grid;
 };

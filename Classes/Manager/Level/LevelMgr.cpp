@@ -68,7 +68,7 @@ void LevelMgr::showImGuiWindow(bool* window)
 			}
 		}
 
-		ImGui::Text("Current Level : %s - Score : %i - Energy : %i", m_level->getName(), m_level->getScore(), getUsedEnergy());
+		ImGui::Text("Current Level : %s", m_level->getName());
 		ImGui::Text("x = %f; y = %f", m_level->getSize().x, m_level->getSize().y);
 		
 		std::vector<std::wstring> files;
@@ -116,7 +116,11 @@ void LevelMgr::showImGuiWindow(bool* window)
 		{
 			m_level->clearAllCases();
 		}
-		
+
+		ImGui::Text("Score : %i - Energy : %i", m_level->getScore(), getUsedEnergy());
+		ImGui::Text("Jewels lost : %i", m_level->getJewelsLost());
+		ImGui::Text("Suck up dust : %i", m_level->getSuckUpDusts());
+		ImGui::Text("Jewels pick : %i", m_level->getJewelsPick());
 	}
 	ImGui::End();
 }

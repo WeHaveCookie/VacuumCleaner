@@ -33,7 +33,6 @@ void CommandMove::execute()
 	{
 		EntityMgr::getSingleton()->moveEntity(MoveDirection::Down, entity);
 	}
-	//entity->addMotion(m_motion);
 }
 
 void CommandMove::undo()

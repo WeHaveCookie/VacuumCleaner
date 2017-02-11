@@ -251,6 +251,9 @@ bool Level::load(const char* path)
 	}
 	m_score = 0;
 	m_usedEnergy = 0;
+	m_jewelsLost = 0;
+	m_suckUpDusts = 0;
+	m_jewelsPick = 0;
 	FileMgr::CloseFile(json);
 	return true;
 }
@@ -299,8 +302,23 @@ void Level::createGrid(const char* path)
 
 const std::vector<std::vector<CaseHandler*>> Level::getGrid()
 {
-	useEnergy();
 	return m_grid;
+}
+
+const std::vector<std::vector<CaseHandler>> Level::getCacheGrid()
+{
+	useEnergy();
+	std::vector<std::vector<CaseHandler>> ans;
+	for (auto& line : m_grid)
+	{
+		std::vector<CaseHandler> currentLine;
+		for (auto& caseH : line)
+		{
+			currentLine.push_back(*caseH);
+		}
+		ans.push_back(currentLine);
+	}
+	return ans;
 }
 
 void Level::registrerIntoGrid(Entity* ent, sf::Vector2i pos)
@@ -341,12 +359,17 @@ void Level::clearAllCases()
 
 void Level::cleanCase(Entity* ent)
 {
+	auto caseH = PhysicMgr::getSingleton()->getCase(ent);
+	if(caseH->dusts > 0) m_suckUpDusts++;
+	m_jewelsLost += caseH->jewels;
 	m_score += PhysicMgr::getSingleton()->getCase(ent)->clean();
 	useEnergy();
 }
 
 void Level::pickCase(Entity* ent)
 {
+	auto caseH = PhysicMgr::getSingleton()->getCase(ent);
+	if (caseH->jewels > 0) m_jewelsPick++;
 	m_score += PhysicMgr::getSingleton()->getCase(ent)->pickJewels();
 	useEnergy();
 }
