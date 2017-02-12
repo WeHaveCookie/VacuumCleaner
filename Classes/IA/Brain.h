@@ -65,7 +65,6 @@ private:
 
 	bool						m_displayInfo;
 	int							m_energy;
-	std::queue<Intention::Enum>	m_intentions;
 	int							m_currentIntention;
 	std::vector<Intention::Enum> m_debugIntentions;
 	float						m_exploreTime;
@@ -74,5 +73,10 @@ private:
 	Entity*						m_entity;
 	Graph						m_exploSparseGraph;
 	bool						m_debugPause;
-	std::vector<std::vector<CaseHandler>>	m_grid;
+
+	//Les intentions de l'agent
+	std::queue<Intention::Enum>	m_intentions;
+
+	//Croyance de l'agent == Etat de l'environnement
+	std::vector<std::vector<CaseHandler>>	m_croyance;
 };

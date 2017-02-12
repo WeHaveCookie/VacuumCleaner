@@ -96,7 +96,7 @@ void Brain::explore()
 	m_intentions = std::queue<Intention::Enum>();
 	m_debugIntentions.clear();
 	m_exploSparseGraph.update();
-	m_grid = LevelMgr::getSingleton()->getCacheGrid();
+	m_croyance = LevelMgr::getSingleton()->getCacheGrid();
 	typedef Graph_SearchAStar<Graph, Heuristic_Manhattan> AStar;
 	auto bestCase = getHigherScoreCase();
 	if (bestCase >= 0)
@@ -238,7 +238,7 @@ int Brain::getHigherScoreCase()
 {
 	uint32_t score = 0;
 	int ans = -1;
-	for (auto& line : m_grid)
+	for (auto& line : m_croyance)
 	{
 		for (auto& handler : line)
 		{
