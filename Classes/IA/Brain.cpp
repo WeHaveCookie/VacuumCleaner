@@ -74,11 +74,14 @@ void Brain::process(const float dt)
 	m_timer += dt;
 	if (m_timer >= m_exploreTime)
 	{
-		int id;
-		Command* cmd = CommandMgr::getSingleton()->getCommand("CommandExplore", &id);
-		cmd->init(m_entity);
-		cmd->setExeType(CommandExeType::AtOnce);
-		CommandMgr::getSingleton()->addCommand(cmd);
+		if (!m_entity->hasTarget())
+		{
+			int id;
+			Command* cmd = CommandMgr::getSingleton()->getCommand("CommandExplore", &id);
+			cmd->init(m_entity);
+			cmd->setExeType(CommandExeType::AtOnce);
+			CommandMgr::getSingleton()->addCommand(cmd);
+		}
 	}
 	executeAction();
 }

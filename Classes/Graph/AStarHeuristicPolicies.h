@@ -76,7 +76,7 @@ public:
 	template <class graph_type>
 	static double Calculate(const graph_type& G, int nd1, int nd2)
 	{
-		return std::abs(G.GetNode(nd2).Pos().x - G.GetNode(nd1).Pos().x) + std::abs(G.GetNode(nd2).Pos().y - G.GetNode(nd1).Pos().y);
+		return Vector2::Manathan(G.GetNode(nd1).Pos(), G.GetNode(nd2).Pos());
 	}
 };
 

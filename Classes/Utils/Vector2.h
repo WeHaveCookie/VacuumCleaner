@@ -34,6 +34,10 @@ public:
 	void reassign(float _x, float _y);
 	void reassign(Vector2 vec);
 	sf::Vector2f sf() { return sf::Vector2f(x, y); }
+	static double Manathan(const Vector2& v1, const Vector2& v2)
+	{
+		return std::abs(v2.x - v1.x) + std::abs(v2.y - v1.y);
+	}
 	float VecDistance(const Vector2 &v1, const Vector2& v2)
 	{
 		double ySeparation = v2.y - v1.y;

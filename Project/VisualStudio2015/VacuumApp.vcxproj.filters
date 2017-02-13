@@ -156,12 +156,6 @@
     <ClInclude Include="..\..\Classes\Graph\GraphEdgeTypes.h">
       <Filter>Classes\Graph</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Classes\Graph\GraphNodeTypes.h">
-      <Filter>Classes\Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Classes\Graph\HandyGraphFunctions.h">
-      <Filter>Classes\Graph</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Classes\Graph\NodeTypeEnumerations.h">
       <Filter>Classes\Graph</Filter>
     </ClInclude>

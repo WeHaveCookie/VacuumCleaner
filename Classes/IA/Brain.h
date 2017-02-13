@@ -35,7 +35,7 @@ struct Node
 		return caseHandler->index;
 	}
 
-	const Vector2 Pos()
+	const Vector2 Pos() const
 	{
 		return cacheCase.background->getPosition();
 	}

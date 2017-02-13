@@ -443,8 +443,6 @@ xcopy /f/y/d "..\..\..\External\SFML-2.3.2\bin\x64\Release\*.dll" "$(OutDir)"</C
     <ClInclude Include="..\..\Classes\Graph\AStarHeuristicPolicies.h" />
     <ClInclude Include="..\..\Classes\Graph\GraphAlgorithms.h" />
     <ClInclude Include="..\..\Classes\Graph\GraphEdgeTypes.h" />
-    <ClInclude Include="..\..\Classes\Graph\GraphNodeTypes.h" />
-    <ClInclude Include="..\..\Classes\Graph\HandyGraphFunctions.h" />
     <ClInclude Include="..\..\Classes\Graph\NodeTypeEnumerations.h" />
     <ClInclude Include="..\..\Classes\Graph\SparseGraph.h" />
     <ClInclude Include="..\..\Classes\HUD\Menu.h" />
