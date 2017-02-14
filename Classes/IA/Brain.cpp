@@ -107,6 +107,11 @@ void Brain::explore()
 		auto search = AStar(m_exploSparseGraph, PhysicMgr::getSingleton()->getCase(m_entity)->index, bestCase);
 		createIntention(search.GetPathToTarget());
 	}
+	if (m_intentions.empty())
+	{
+		m_exploreTime += ((m_exploreTime - m_timeToFinishWork) / 2.0f);
+		m_exploreTime = std::min(m_exploreTime + m_exploreTime, 30.0f);
+	}
 	m_currentIntention = -1;
 	m_timer = 0.0f;
 	m_timeToFinishWork = m_exploreTime;
