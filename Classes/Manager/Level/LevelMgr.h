@@ -37,8 +37,8 @@ class LevelMgr : public Manager
 		void unloadLevel();
 		uint32_t loadLevelAsync();
 
-		void createDusts(uint32_t nbr);
-		void createJewels(uint32_t nbr);
+		void createAsyncDusts(uint32_t nbr);
+		void createAsyncJewels(uint32_t nbr);
 		
 		CaseHandler* getHigherScoreCase();
 
@@ -57,10 +57,13 @@ class LevelMgr : public Manager
     protected:
     private:
         // Function
+		void registerAsyncEnvironment();
+
 		static LevelMgr*	s_singleton;
 		Quadtree*			m_quadtree;
 		sf::Time			m_processTime;
 		int					m_queryCount;
 		Level*				m_level;
+		std::list<uint32_t>	m_loadingEnvironment;
 };
 

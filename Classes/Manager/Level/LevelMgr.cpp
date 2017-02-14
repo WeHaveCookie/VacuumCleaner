@@ -38,6 +38,7 @@ void LevelMgr::process(const float dt)
 {
 	sf::Clock clock;
 	m_quadtree->update();
+	registerAsyncEnvironment();
 	m_processTime = clock.getElapsedTime();
 }
 
@@ -176,23 +177,19 @@ void LevelMgr::unloadLevel()
 	m_level->unload();
 }
 
-void LevelMgr::createDusts(uint32_t nbr)
+void LevelMgr::createAsyncDusts(uint32_t nbr)
 {
 	for (uint32_t i = 0; i < nbr; i++)
 	{
-		auto ent = EntityMgr::getSingleton()->createEntity("Data/Environment/dust.json");
-		sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
-		m_level->registrerIntoGrid(ent, pos);
+		m_loadingEnvironment.push_back(EntityMgr::getSingleton()->createAsyncEntity("Data/Environment/dust.json"));
 	}
 }
 
-void LevelMgr::createJewels(uint32_t nbr)
+void LevelMgr::createAsyncJewels(uint32_t nbr)
 {
 	for (uint32_t i = 0; i < nbr; i++)
 	{
-		auto ent = EntityMgr::getSingleton()->createEntity("Data/Environment/jewel.json");
-		sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
-		m_level->registrerIntoGrid(ent, pos);
+		m_loadingEnvironment.push_back(EntityMgr::getSingleton()->createAsyncEntity("Data/Environment/jewel.json"));
 	}
 }
 
@@ -209,4 +206,23 @@ void LevelMgr::cleanCase(Entity* ent)
 void LevelMgr::pickCase(Entity* ent)
 {
 	m_level->pickCase(ent);
+}
+
+void LevelMgr::registerAsyncEnvironment()
+{
+	std::list<uint32_t> environmentOnLoading;
+	for (auto& taskID : m_loadingEnvironment)
+	{
+		auto ent = EntityMgr::getSingleton()->getAsyncEntity(taskID);
+		if (ent != nullptr)
+		{
+			sf::Vector2i pos(randIntBorned(0, m_level->getSize().x), randIntBorned(0, m_level->getSize().y));
+			m_level->registrerIntoGrid(ent, pos);
+		}
+		else
+		{
+			environmentOnLoading.push_back(taskID);
+		}
+	}
+	m_loadingEnvironment = environmentOnLoading;
 }

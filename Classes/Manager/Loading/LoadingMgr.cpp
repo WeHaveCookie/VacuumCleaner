@@ -102,14 +102,14 @@ bool LoadingMgr::isLoaded(uint32_t id)
 	return m_loadingTasks->taskIsFinished(id);
 }
 
-bool LoadingMgr::getResult(uint32_t id, void* result)
+bool LoadingMgr::getResult(uint32_t id, void** result)
 {
 	if (isLoaded(id))
 	{
 		Entity* ent = EntityMgr::getSingleton()->getEntity(id);
 		if (ent != NULL)
 		{
-			result = ent;
+			*result = ent;
 			return true;
 		}
 	}

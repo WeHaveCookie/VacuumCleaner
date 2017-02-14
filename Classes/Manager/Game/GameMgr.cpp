@@ -168,7 +168,7 @@ void GameMgr::generateEnvironment(const float dt)
 		m_updateEnvironmentTimer = 0.0f;
 		auto nbrDusts = randIntBorned(0, m_dustsPerSpawn + 1);
 		auto nbrJewels = randIntBorned(0, m_jewelsPerSpawn + 1);
-		LevelMgr::getSingleton()->createDusts(nbrDusts);
-		LevelMgr::getSingleton()->createJewels(nbrJewels);
+		LevelMgr::getSingleton()->createAsyncDusts(nbrDusts);
+		LevelMgr::getSingleton()->createAsyncJewels(nbrJewels);
 	}
 }

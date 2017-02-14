@@ -98,7 +98,7 @@ public:
 
 	void load(Entity* ent, const char* path);
 	uint32_t loadAsync(Entity* ent, const char* path);
-	bool getResult(uint32_t id, void* result);
+	bool getResult(uint32_t id, void** result);
 
 	sf::Time getProcessTime() { return m_processTime; }
 

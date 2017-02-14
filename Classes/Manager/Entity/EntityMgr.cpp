@@ -187,6 +187,13 @@ Entity* EntityMgr::getEntity(uint32_t id)  const
 	return m_entitys->getEntity(id);
 }
 
+Entity* EntityMgr::getAsyncEntity(uint32_t id) const
+{
+	Entity* res = nullptr;
+	auto valid = LoadingMgr::getSingleton()->getResult(id, (void**)&res);
+	return res;
+}
+
 int EntityMgr::getNumberUsedEntity()
 {
 	return m_entitys->getNumberUsedEntity();
