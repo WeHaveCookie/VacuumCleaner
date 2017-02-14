@@ -30,6 +30,7 @@ class GameMgr : public Manager
 		const int getDustFactor() const { return m_dustFactor; }
 		const int getJewelFactor() const { return m_jewelFactor; }
 		const int getLostJewelFactor() const { return m_lossJewelFactor; }
+		const int getEnergyUsedFactor() const { return m_energyUsedFactor; }
 
     protected:
     private:
@@ -52,4 +53,5 @@ class GameMgr : public Manager
 		int						m_dustFactor;
 		int						m_jewelFactor;
 		int						m_lossJewelFactor;
+		int						m_energyUsedFactor;
 };

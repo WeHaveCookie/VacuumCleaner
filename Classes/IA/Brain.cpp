@@ -7,6 +7,7 @@
 #include "Graph/GraphAlgorithms.h"
 #include "Graph/AStarHeuristicPolicies.h"
 #include "Manager/Physic/PhysicMgr.h"
+#include "Manager/Game/GameMgr.h"
 
 std::vector<const char*> IntentoToCommandName =
 {
@@ -30,6 +31,7 @@ Brain::Brain(Entity* ent)
 	m_timer = 0.0f;
 	m_currentIntention = 0;
 	m_timeToFinishWork = 10.0f;
+	m_debugIntentionScore = 0;
 	initGraph();
 }
 
@@ -159,6 +161,8 @@ void Brain::initGraph()
 
 void Brain::createIntention(std::list<int> path)
 {
+	m_debugIntentionScore = 0;
+	int factorEnergyUsed = GameMgr::getSingleton()->getEnergyUsedFactor();
 	auto currentPos = PhysicMgr::getSingleton()->getCase(m_entity)->background->getPosition();
 	for (auto& nodeID : path)
 	{
@@ -169,35 +173,46 @@ void Brain::createIntention(std::list<int> path)
 		{
 			m_intentions.push(Intention::MoveLeft);
 			m_debugIntentions.push_back(Intention::MoveLeft);
+			m_debugIntentionScore -= m_energy * factorEnergyUsed;
 		}
 		else if (casePos.x > currentPos.x)
 		{
 			m_intentions.push(Intention::MoveRight);
 			m_debugIntentions.push_back(Intention::MoveRight);
+			m_debugIntentionScore -= m_energy * factorEnergyUsed;
 		}
 		else if (casePos.y < currentPos.y)
 		{
 			m_intentions.push(Intention::MoveUp);
 			m_debugIntentions.push_back(Intention::MoveUp);
+			m_debugIntentionScore -= m_energy * factorEnergyUsed;
 		}
 		else if (casePos.y > currentPos.y)
 		{
 			m_intentions.push(Intention::MoveDown);
 			m_debugIntentions.push_back(Intention::MoveDown);
+			m_debugIntentionScore -= m_energy * factorEnergyUsed;
 		}
 
 		for (uint32_t i = 0; i < node.cacheCase.jewels; i++)
 		{
 			m_intentions.push(Intention::PickUp);
 			m_debugIntentions.push_back(Intention::PickUp);
+			m_debugIntentionScore += GameMgr::getSingleton()->getJewelFactor();
 		}
 
 		for (uint32_t i = 0; i < node.cacheCase.dusts; i++)
 		{
 			m_intentions.push(Intention::Clean);
 			m_debugIntentions.push_back(Intention::Clean);
+			m_debugIntentionScore += GameMgr::getSingleton()->getDustFactor();
 		}
 		currentPos = casePos;
+	}
+	if (m_debugIntentionScore <= 0)
+	{
+		m_intentions = std::queue<Intention::Enum>();
+		m_debugIntentions.clear();
 	}
 }
 
@@ -218,7 +233,12 @@ void Brain::showImGuiWindow()
 			auto color = ImColor(r*sc, g*sc, b*sc);
 			ImGui::TextColored(color, "Timer %f / %f", m_timer, m_exploreTime);
 			ImGui::Text("Work Done in %f sec", m_timeToFinishWork);
-			ImGui::Text("Intention - nbr : %i", m_intentions.size());
+			ImGui::SameLine();
+			if (ImGui::Button("Explore"))
+			{
+				m_timer = m_exploreTime;
+			}
+			ImGui::Text("Intention - nbr : %i - Score : %i", m_intentions.size(), m_debugIntentionScore);
 			ImGui::Separator();
 			int counter = 0;
 			for (auto& intention : m_debugIntentions)

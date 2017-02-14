@@ -1,0 +1,19 @@
+{
+	"Name" : "StarPink",
+	"Width" : 106,
+	"Height" : 80,
+	"Speed" : 1.0,
+	"Scale" : [0.5, 0.5],
+	"Position" : [100.0, 10.0],
+	"State" : "IDLE_RIGHT",	
+	"Movable" : false,
+	"BackgroundLevel" : 15,
+	"Animations" : [
+		{
+			"State" : "IDLE_RIGHT",
+			"Frame" : 1,
+			"Line" : 1,
+			"Time" : 0.1
+		}
+	]
+}

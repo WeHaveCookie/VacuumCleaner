@@ -36,6 +36,7 @@ class EntityMgr : public Manager
 		uint32_t createAsyncEntity(const char* path) const;
 		void deleteEntity(uint32_t id);
 		Entity* getEntity(uint32_t id) const;
+		Entity* getEntity(char* name) const;
 		Entity* getAsyncEntity(uint32_t id) const;
 		Entity* getMainCharacter() const { return getEntity(m_mainCharacterID); }
 		void setMainCharacter(uint32_t id) { m_mainCharacterID = id; }

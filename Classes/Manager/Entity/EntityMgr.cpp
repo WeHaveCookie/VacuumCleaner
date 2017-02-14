@@ -9,6 +9,7 @@
 #include "Utils/wcharUtils.h"
 #include "Manager/Input/InputMgr.h"
 #include "Manager/Level/LevelMgr.h"
+#include "IA/Brain.h"
 
 EntityMgr* EntityMgr::s_singleton = NULL;
 uint32_t Entity::newUID = 0;
@@ -55,6 +56,44 @@ void EntityMgr::process(const float dt)
 		}
 	}
 	m_entitys->process(dt);
+	auto brain = getEntity("Vacuum")->getBrain();
+	if (brain != nullptr)
+	{
+		auto caseID = brain->getHigherScoreCase();
+		Vector2 posPinkStar;
+		auto starPink = getEntity("StarPink");
+		if (caseID < 0)
+		{
+			posPinkStar = Vector2(100.0f, 10.0f);
+		}
+		else
+		{
+			auto caseH = LevelMgr::getSingleton()->getCase(caseID);
+			auto caseBound = caseH->background->getGlobalBounds();
+			auto starBound = starPink->getGlobalBounds();
+			posPinkStar.x = caseBound.left + caseBound.width / 2.0f;
+			posPinkStar.y = caseBound.top + caseBound.height / 2.0f - starBound.height / 2.0f;
+			
+		}
+		starPink->setPosition(posPinkStar);
+
+	}
+	auto caseH = LevelMgr::getSingleton()->getHigherScoreCase();
+	Vector2 posYellowStar;
+	auto starYellow = getEntity("StarYellow");
+	if (caseH == nullptr)
+	{
+		posYellowStar = Vector2(50.0f, 10.0f);
+	}
+	else
+	{
+
+		auto caseBound = caseH->background->getGlobalBounds();
+		auto starBound = starYellow->getGlobalBounds();
+		posYellowStar.x = caseBound.left + caseBound.width / 2.0f - starBound.width;
+		posYellowStar.y = caseBound.top + caseBound.height / 2.0f - starBound.height / 2.0f;
+	}
+	starYellow->setPosition(posYellowStar);
 	m_processTime = clock.getElapsedTime();
 }
 
@@ -185,6 +224,11 @@ void EntityMgr::deleteEntity(uint32_t id)
 Entity* EntityMgr::getEntity(uint32_t id)  const
 {
 	return m_entitys->getEntity(id);
+}
+
+Entity* EntityMgr::getEntity(char* name) const
+{
+	return m_entitys->getEntity(name);
 }
 
 Entity* EntityMgr::getAsyncEntity(uint32_t id) const

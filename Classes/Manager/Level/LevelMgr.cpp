@@ -226,3 +226,8 @@ void LevelMgr::registerAsyncEnvironment()
 	}
 	m_loadingEnvironment = environmentOnLoading;
 }
+
+CaseHandler* LevelMgr::getCase(uint32_t id)
+{
+	return m_level->getCase(id);
+}

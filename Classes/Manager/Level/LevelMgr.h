@@ -43,6 +43,7 @@ class LevelMgr : public Manager
 		CaseHandler* getHigherScoreCase();
 
 		const sf::Vector2f getSizeCase() const { return m_level->getCaseSize(); }
+		CaseHandler* getCase(uint32_t id);
 
 		const sf::Vector2f getPositionLevel() const { return m_level->getPosition(); }
 		const sf::Vector2f getSizeLevel() const { return m_level->getSizeLevel(); }

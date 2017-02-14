@@ -55,6 +55,7 @@ public:
 	void registrerIntoGrid(Entity* ent, sf::Vector2i pos);
 
 	CaseHandler* getHigherScoreCase();
+	CaseHandler* getCase(uint32_t id);
 	const sf::Vector2f getCaseSize() const { return m_caseSize; }
 	const sf::Vector2f getPosition() const { return m_position; }
 	const sf::Vector2f getSizeLevel() const { return sf::Vector2f(m_size.x * m_caseSize.x, m_size.y * m_caseSize.y); }

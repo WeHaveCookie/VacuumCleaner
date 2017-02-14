@@ -374,3 +374,18 @@ void Level::pickCase(Entity* ent)
 	useEnergy();
 }
 
+CaseHandler* Level::getCase(uint32_t id)
+{
+	CaseHandler* ans = nullptr;
+	for (auto& line : m_grid)
+	{
+		for (auto& handler : line)
+		{
+			if (handler->index == id)
+			{
+				ans = handler;
+			}
+		}
+	}
+	return ans;
+}

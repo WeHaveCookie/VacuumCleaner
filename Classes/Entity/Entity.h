@@ -294,6 +294,7 @@ class Entity
 		const bool hasTarget() const;
 		void explore();
 
+		Brain* getBrain() const { return m_state.m_live.m_brain; }
 
 	protected:
 		static uint32_t		newUID;

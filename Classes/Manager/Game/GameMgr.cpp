@@ -54,6 +54,7 @@ void GameMgr::init()
 	m_jewelFactor = 5;
 	m_dustFactor = 10;
 	m_lossJewelFactor = -20;
+	m_energyUsedFactor = 5;
 }
 
 void GameMgr::process(const float dt)
@@ -111,7 +112,7 @@ void GameMgr::showImGuiWindow(bool* window)
 		ImGui::InputInt("Dust Factor", &m_dustFactor);
 		ImGui::InputInt("Jewel Factor", &m_jewelFactor);
 		ImGui::InputInt("Loss Jewel Factor", &m_lossJewelFactor);
-		
+		ImGui::InputInt("energy used Factor", &m_energyUsedFactor);
 	}
 	ImGui::End();
 }
@@ -164,7 +165,7 @@ void GameMgr::generateEnvironment(const float dt)
 {
 	m_updateEnvironmentTimer += dt;
 	if (m_updateEnvironmentTimer > m_updateEnvironmentDelay)
-	{
+	{ 
 		m_updateEnvironmentTimer = 0.0f;
 		auto nbrDusts = randIntBorned(0, m_dustsPerSpawn + 1);
 		auto nbrJewels = randIntBorned(0, m_jewelsPerSpawn + 1);

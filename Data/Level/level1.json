@@ -8,5 +8,11 @@
 	"Backgrounds" : [
 	],
 	"Entitys" : [
+		{
+			"Path" : "Data/Environment/starPink.json"
+		},
+		{
+			"Path" : "Data/Environment/starYellow.json"
+		}
 	]
 }

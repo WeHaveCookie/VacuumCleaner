@@ -57,11 +57,12 @@ public:
 	void showImGuiWindow();
 
 	void showInfo() { m_displayInfo = !m_displayInfo; }
+	int getHigherScoreCase();
 
 private:
 	void initGraph();
 	void createIntention(std::list<int> path);
-	int getHigherScoreCase();
+	
 
 	bool						m_displayInfo;
 	int							m_energy;
@@ -73,6 +74,7 @@ private:
 	Entity*						m_entity;
 	Graph						m_exploSparseGraph;
 	bool						m_debugPause;
+	int							m_debugIntentionScore;
 
 	//Les intentions de l'agent
 	std::queue<Intention::Enum>	m_intentions;

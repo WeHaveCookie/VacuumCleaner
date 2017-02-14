@@ -12,6 +12,7 @@ public:
 	void process(const float dt);
 	void paint();
 	Entity* getEntity(uint32_t id);
+	Entity* getEntity(char* name) const;
 	void release(uint32_t id);
 
 	const int getNumberUsedEntity() const { return m_usedEntity; }
